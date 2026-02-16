@@ -389,8 +389,16 @@ internal interface _UniFFILib : Library {
 
     fun uniffi_xybrid_uniffi_fn_free_xybridmodel(`ptr`: Pointer,_uniffi_out_err: RustCallStatus, 
     ): Unit
+    fun uniffi_xybrid_uniffi_fn_method_xybridmodel_default_voice_id(`ptr`: Pointer,_uniffi_out_err: RustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_xybrid_uniffi_fn_method_xybridmodel_has_voices(`ptr`: Pointer,_uniffi_out_err: RustCallStatus, 
+    ): Byte
     fun uniffi_xybrid_uniffi_fn_method_xybridmodel_run(`ptr`: Pointer,`envelope`: RustBuffer.ByValue,
     ): Pointer
+    fun uniffi_xybrid_uniffi_fn_method_xybridmodel_voice(`ptr`: Pointer,`voiceId`: RustBuffer.ByValue,_uniffi_out_err: RustCallStatus, 
+    ): RustBuffer.ByValue
+    fun uniffi_xybrid_uniffi_fn_method_xybridmodel_voices(`ptr`: Pointer,_uniffi_out_err: RustCallStatus, 
+    ): RustBuffer.ByValue
     fun uniffi_xybrid_uniffi_fn_free_xybridmodelloader(`ptr`: Pointer,_uniffi_out_err: RustCallStatus, 
     ): Unit
     fun uniffi_xybrid_uniffi_fn_constructor_xybridmodelloader_from_bundle(`path`: RustBuffer.ByValue,_uniffi_out_err: RustCallStatus, 
@@ -517,7 +525,15 @@ internal interface _UniFFILib : Library {
     ): Unit
     fun uniffi_xybrid_uniffi_checksum_func_init_sdk_cache_dir(
     ): Short
+    fun uniffi_xybrid_uniffi_checksum_method_xybridmodel_default_voice_id(
+    ): Short
+    fun uniffi_xybrid_uniffi_checksum_method_xybridmodel_has_voices(
+    ): Short
     fun uniffi_xybrid_uniffi_checksum_method_xybridmodel_run(
+    ): Short
+    fun uniffi_xybrid_uniffi_checksum_method_xybridmodel_voice(
+    ): Short
+    fun uniffi_xybrid_uniffi_checksum_method_xybridmodel_voices(
     ): Short
     fun uniffi_xybrid_uniffi_checksum_method_xybridmodelloader_load(
     ): Short
@@ -545,7 +561,19 @@ private fun uniffiCheckApiChecksums(lib: _UniFFILib) {
     if (lib.uniffi_xybrid_uniffi_checksum_func_init_sdk_cache_dir() != 59754.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if (lib.uniffi_xybrid_uniffi_checksum_method_xybridmodel_default_voice_id() != 623.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_xybrid_uniffi_checksum_method_xybridmodel_has_voices() != 11425.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if (lib.uniffi_xybrid_uniffi_checksum_method_xybridmodel_run() != 58716.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_xybrid_uniffi_checksum_method_xybridmodel_voice() != 56923.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_xybrid_uniffi_checksum_method_xybridmodel_voices() != 2150.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_xybrid_uniffi_checksum_method_xybridmodelloader_load() != 43654.toShort()) {
@@ -942,8 +970,12 @@ abstract class FFIObject(
 }
 
 public interface XybridModelInterface {
-    @Throws(XybridException::class)
+    
+    fun `defaultVoiceId`(): String?
+    fun `hasVoices`(): Boolean@Throws(XybridException::class)
     suspend fun `run`(`envelope`: XybridEnvelope): XybridResult
+    fun `voice`(`voiceId`: String): XybridVoiceInfo?
+    fun `voices`(): List<XybridVoiceInfo>?
     companion object
 }
 
@@ -965,6 +997,28 @@ class XybridModel(
         }
     }
 
+    override fun `defaultVoiceId`(): String? =
+        callWithPointer {
+    rustCall() { _status ->
+    _UniFFILib.INSTANCE.uniffi_xybrid_uniffi_fn_method_xybridmodel_default_voice_id(it,
+        
+        _status)
+}
+        }.let {
+            FfiConverterOptionalString.lift(it)
+        }
+    
+    override fun `hasVoices`(): Boolean =
+        callWithPointer {
+    rustCall() { _status ->
+    _UniFFILib.INSTANCE.uniffi_xybrid_uniffi_fn_method_xybridmodel_has_voices(it,
+        
+        _status)
+}
+        }.let {
+            FfiConverterBoolean.lift(it)
+        }
+    
     
     @Throws(XybridException::class)
     @Suppress("ASSIGNED_BUT_NEVER_ACCESSED_VARIABLE")
@@ -985,6 +1039,28 @@ class XybridModel(
             XybridException.ErrorHandler,
         )
     }
+    override fun `voice`(`voiceId`: String): XybridVoiceInfo? =
+        callWithPointer {
+    rustCall() { _status ->
+    _UniFFILib.INSTANCE.uniffi_xybrid_uniffi_fn_method_xybridmodel_voice(it,
+        FfiConverterString.lower(`voiceId`),
+        _status)
+}
+        }.let {
+            FfiConverterOptionalTypeXybridVoiceInfo.lift(it)
+        }
+    
+    override fun `voices`(): List<XybridVoiceInfo>? =
+        callWithPointer {
+    rustCall() { _status ->
+    _UniFFILib.INSTANCE.uniffi_xybrid_uniffi_fn_method_xybridmodel_voices(it,
+        
+        _status)
+}
+        }.let {
+            FfiConverterOptionalSequenceTypeXybridVoiceInfo.lift(it)
+        }
+    
     
 
     
@@ -1140,6 +1216,48 @@ public object FfiConverterTypeXybridResult: FfiConverterRustBuffer<XybridResult>
             FfiConverterOptionalByteArray.write(value.`audioBytes`, buf)
             FfiConverterOptionalSequenceFloat.write(value.`embedding`, buf)
             FfiConverterUInt.write(value.`latencyMs`, buf)
+    }
+}
+
+
+
+
+data class XybridVoiceInfo (
+    var `id`: String, 
+    var `name`: String, 
+    var `gender`: String?, 
+    var `language`: String?, 
+    var `style`: String?
+) {
+    
+    companion object
+}
+
+public object FfiConverterTypeXybridVoiceInfo: FfiConverterRustBuffer<XybridVoiceInfo> {
+    override fun read(buf: ByteBuffer): XybridVoiceInfo {
+        return XybridVoiceInfo(
+            FfiConverterString.read(buf),
+            FfiConverterString.read(buf),
+            FfiConverterOptionalString.read(buf),
+            FfiConverterOptionalString.read(buf),
+            FfiConverterOptionalString.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: XybridVoiceInfo) = (
+            FfiConverterString.allocationSize(value.`id`) +
+            FfiConverterString.allocationSize(value.`name`) +
+            FfiConverterOptionalString.allocationSize(value.`gender`) +
+            FfiConverterOptionalString.allocationSize(value.`language`) +
+            FfiConverterOptionalString.allocationSize(value.`style`)
+    )
+
+    override fun write(value: XybridVoiceInfo, buf: ByteBuffer) {
+            FfiConverterString.write(value.`id`, buf)
+            FfiConverterString.write(value.`name`, buf)
+            FfiConverterOptionalString.write(value.`gender`, buf)
+            FfiConverterOptionalString.write(value.`language`, buf)
+            FfiConverterOptionalString.write(value.`style`, buf)
     }
 }
 
@@ -1623,6 +1741,35 @@ public object FfiConverterOptionalByteArray: FfiConverterRustBuffer<ByteArray?> 
 
 
 
+public object FfiConverterOptionalTypeXybridVoiceInfo: FfiConverterRustBuffer<XybridVoiceInfo?> {
+    override fun read(buf: ByteBuffer): XybridVoiceInfo? {
+        if (buf.get().toInt() == 0) {
+            return null
+        }
+        return FfiConverterTypeXybridVoiceInfo.read(buf)
+    }
+
+    override fun allocationSize(value: XybridVoiceInfo?): Int {
+        if (value == null) {
+            return 1
+        } else {
+            return 1 + FfiConverterTypeXybridVoiceInfo.allocationSize(value)
+        }
+    }
+
+    override fun write(value: XybridVoiceInfo?, buf: ByteBuffer) {
+        if (value == null) {
+            buf.put(0)
+        } else {
+            buf.put(1)
+            FfiConverterTypeXybridVoiceInfo.write(value, buf)
+        }
+    }
+}
+
+
+
+
 public object FfiConverterOptionalSequenceFloat: FfiConverterRustBuffer<List<Float>?> {
     override fun read(buf: ByteBuffer): List<Float>? {
         if (buf.get().toInt() == 0) {
@@ -1652,6 +1799,35 @@ public object FfiConverterOptionalSequenceFloat: FfiConverterRustBuffer<List<Flo
 
 
 
+public object FfiConverterOptionalSequenceTypeXybridVoiceInfo: FfiConverterRustBuffer<List<XybridVoiceInfo>?> {
+    override fun read(buf: ByteBuffer): List<XybridVoiceInfo>? {
+        if (buf.get().toInt() == 0) {
+            return null
+        }
+        return FfiConverterSequenceTypeXybridVoiceInfo.read(buf)
+    }
+
+    override fun allocationSize(value: List<XybridVoiceInfo>?): Int {
+        if (value == null) {
+            return 1
+        } else {
+            return 1 + FfiConverterSequenceTypeXybridVoiceInfo.allocationSize(value)
+        }
+    }
+
+    override fun write(value: List<XybridVoiceInfo>?, buf: ByteBuffer) {
+        if (value == null) {
+            buf.put(0)
+        } else {
+            buf.put(1)
+            FfiConverterSequenceTypeXybridVoiceInfo.write(value, buf)
+        }
+    }
+}
+
+
+
+
 public object FfiConverterSequenceFloat: FfiConverterRustBuffer<List<Float>> {
     override fun read(buf: ByteBuffer): List<Float> {
         val len = buf.getInt()
@@ -1670,6 +1846,31 @@ public object FfiConverterSequenceFloat: FfiConverterRustBuffer<List<Float>> {
         buf.putInt(value.size)
         value.forEach {
             FfiConverterFloat.write(it, buf)
+        }
+    }
+}
+
+
+
+
+public object FfiConverterSequenceTypeXybridVoiceInfo: FfiConverterRustBuffer<List<XybridVoiceInfo>> {
+    override fun read(buf: ByteBuffer): List<XybridVoiceInfo> {
+        val len = buf.getInt()
+        return List<XybridVoiceInfo>(len) {
+            FfiConverterTypeXybridVoiceInfo.read(buf)
+        }
+    }
+
+    override fun allocationSize(value: List<XybridVoiceInfo>): Int {
+        val sizeForLength = 4
+        val sizeForItems = value.map { FfiConverterTypeXybridVoiceInfo.allocationSize(it) }.sum()
+        return sizeForLength + sizeForItems
+    }
+
+    override fun write(value: List<XybridVoiceInfo>, buf: ByteBuffer) {
+        buf.putInt(value.size)
+        value.forEach {
+            FfiConverterTypeXybridVoiceInfo.write(it, buf)
         }
     }
 }
