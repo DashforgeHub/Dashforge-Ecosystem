@@ -22,12 +22,11 @@ with intelligent routing based on device capabilities. Supports ASR, TTS, and LL
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
 
-  # Custom ONNX Runtime 1.23.2 xcframework with CoreML EP
-  # Built from source to match ort crate 2.0.0-rc.11 (API v23)
-  # NOTE: We use a custom build instead of onnxruntime-c CocoaPod because:
-  # - CocoaPod is stuck at 1.20.0 (API v20), incompatible with ort 2.0.0-rc.11
-  # - Our build includes CoreML EP for Apple Neural Engine acceleration
-  s.vendored_frameworks = 'Frameworks/onnxruntime.xcframework'
+  # ONNX Runtime 1.23.2 with CoreML EP — resolved at build time by build_pod.sh
+  # NOT vendored in the pod (too large for pub.dev). Instead:
+  # - Monorepo dev: symlink at Frameworks/onnxruntime.xcframework -> vendor/ort-ios/
+  # - pub.dev install: downloaded from HuggingFace to ~/.xybrid/cache/ort-ios/
+  # See cargokit/build_pod.sh for the full resolution logic.
 
   # iOS 13.0 minimum for modern APIs (Metal 2, Combine, CoreML 3, etc.)
   s.platform = :ios, '13.0'
@@ -51,18 +50,21 @@ with intelligent routing based on device capabilities. Supports ASR, TTS, and LL
     :output_files => ["${BUILT_PRODUCTS_DIR}/libxybrid_flutter_ffi.a"],
   }
 
+  # ORT library/header search paths include BOTH possible locations:
+  # 1. Vendored path (monorepo dev with symlink)
+  # 2. Downloaded cache path (pub.dev installs)
+  # Xcode silently ignores non-existent search paths.
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
     # Exclude i386 and x86_64 from simulator builds
     # Modern Macs (M1/M2/M3) use arm64, and ONNX Runtime static library has issues with fat binaries
     'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 x86_64',
     # Force load Rust static library and link C++ standard library
-    # Also force load the custom ORT xcframework
     'OTHER_LDFLAGS' => '-force_load ${BUILT_PRODUCTS_DIR}/libxybrid_flutter_ffi.a -lc++',
-    # Add library search path for custom ONNX Runtime xcframework
-    'LIBRARY_SEARCH_PATHS' => '"$(inherited)" "$(PODS_TARGET_SRCROOT)/Frameworks/onnxruntime.xcframework/ios-arm64"',
-    # Header search path for ORT headers
-    'HEADER_SEARCH_PATHS' => '"$(inherited)" "$(PODS_TARGET_SRCROOT)/Frameworks/onnxruntime.xcframework/ios-arm64/Headers"',
+    # Library search paths for ORT — vendored (monorepo) + cached download (pub.dev)
+    'LIBRARY_SEARCH_PATHS' => '"$(inherited)" "$(PODS_TARGET_SRCROOT)/Frameworks/onnxruntime.xcframework/ios-arm64" "$(HOME)/.xybrid/cache/ort-ios/1.23.2/onnxruntime.xcframework/ios-arm64"',
+    # Header search paths for ORT C headers
+    'HEADER_SEARCH_PATHS' => '"$(inherited)" "$(PODS_TARGET_SRCROOT)/Frameworks/onnxruntime.xcframework/ios-arm64/Headers" "$(HOME)/.xybrid/cache/ort-ios/1.23.2/onnxruntime.xcframework/ios-arm64/Headers"',
     # Enable Metal API validation in debug builds
     'MTL_ENABLE_DEBUG_INFO' => 'INCLUDE_SOURCE',
   }
@@ -73,10 +75,8 @@ with intelligent routing based on device capabilities. Supports ASR, TTS, and LL
   s.user_target_xcconfig = {
     # Force load the Rust static library (NOT the framework) into the app binary
     # This ensures all FFI symbols are available for DynamicLibrary.process()
-    # The Rust library is built to: ${BUILT_PRODUCTS_DIR}/xybrid_flutter/libxybrid_flutter.a
-    # Note: The framework only contains ObjC glue code, Rust lib is separate
     'OTHER_LDFLAGS' => '-force_load ${BUILT_PRODUCTS_DIR}/xybrid_flutter/libxybrid_flutter_ffi.a -lc++',
-    # Library search paths for custom ONNX Runtime xcframework
-    'LIBRARY_SEARCH_PATHS' => '"$(inherited)" "${PODS_ROOT}/xybrid_flutter/Frameworks/onnxruntime.xcframework/ios-arm64"',
+    # Library search paths for ORT — vendored (monorepo) + cached download (pub.dev)
+    'LIBRARY_SEARCH_PATHS' => '"$(inherited)" "${PODS_ROOT}/xybrid_flutter/Frameworks/onnxruntime.xcframework/ios-arm64" "$(HOME)/.xybrid/cache/ort-ios/1.23.2/onnxruntime.xcframework/ios-arm64"',
   }
 end

@@ -25,6 +25,13 @@ pubspec.lock
 # Cargokit build artifacts (but keep build scripts and hash-relevant files)
 cargokit/build_tool/.dart_tool/
 
+# Vendored native binaries — too large for pub.dev (>100MB)
+# These are only needed for monorepo development.
+# Android: ORT pulled from Maven Central at build time (build.gradle)
+# iOS: ORT downloaded from HuggingFace at build time (build_pod.sh)
+android/src/main/jniLibs/
+ios/Frameworks/
+
 # Test artifacts
 coverage/
 test_driver/

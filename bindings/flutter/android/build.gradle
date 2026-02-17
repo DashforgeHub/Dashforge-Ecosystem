@@ -75,6 +75,14 @@ android {
 // See: https://github.com/huggingface/candle/issues/1625
 ext.set('CARGOKIT_RUST_MIN_SDK_VERSION', '28')
 
+// ORT native library — pulled from Maven Central at build time.
+// The ort Rust crate (load-dynamic feature) calls dlopen("libonnxruntime.so")
+// which finds the .so in the APK regardless of source (jniLibs or Maven AAR).
+// Version must match ort Rust crate v2.0.0-rc.10 expectations.
+dependencies {
+    implementation 'com.microsoft.onnxruntime:onnxruntime-android:1.23.2'
+}
+
 apply from: "../cargokit/gradle/plugin.gradle"
 cargokit {
     manifestDir = "../rust"

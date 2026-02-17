@@ -48,54 +48,103 @@ elif [[ "$PLATFORM_NAME" == "iphonesimulator" ]]; then
   echo "=== Setting CARGO_TARGET_AARCH64_APPLE_IOS_SIM_RUSTFLAGS for fp16 support ==="
 fi
 
-# Set ORT_LIB_LOCATION for iOS builds to point to custom ONNX Runtime static library
-# This allows ort crate to link against our custom ORT 1.23.2 build with CoreML EP
-# NOTE: We use a custom build because the onnxruntime-c CocoaPod is stuck at 1.20.0
-#
+# ============================================================================
+# ORT Resolution: Find or download ONNX Runtime 1.23.2 static library
+# ============================================================================
 # ort-sys linking modes:
-# 1. ORT_IOS_XCFWK_LOCATION: Expects ios-arm64/onnxruntime.framework (dynamic framework)
-# 2. ORT_LIB_LOCATION: Expects directory with libonnxruntime.a (static library)
+# 1. ORT_IOS_XCFWK_LOCATION: Expects ios-arm64/onnxruntime.framework (dynamic)
+# 2. ORT_LIB_LOCATION: Expects directory with libonnxruntime.a (static)
 # We use mode 2 since we built a static library, not a framework.
-if [[ "$PLATFORM_NAME" == "iphoneos" || "$PLATFORM_NAME" == "iphonesimulator" ]]; then
-  # Custom xcframework is bundled in the pod's Frameworks directory (may be a symlink)
-  # Structure: ios/Frameworks/onnxruntime.xcframework/ios-arm64/libonnxruntime.a
-  ORT_XCFRAMEWORK_BASE="$PODS_TARGET_SRCROOT/Frameworks/onnxruntime.xcframework"
+#
+# Resolution order:
+# 1. Vendored path (monorepo dev — symlink to vendor/ort-ios/)
+# 2. Cached download (~/.xybrid/cache/ort-ios/onnxruntime.xcframework)
+# 3. Download from HuggingFace and cache
+# ============================================================================
 
-  # If the xcframework is a symlink, resolve it to the real path
-  # This handles cases where CocoaPods accesses the plugin through .symlinks/ which
-  # breaks relative symlink resolution (.. navigates the logical symlink path, not physical)
-  # Using cd -P ensures we resolve to the physical filesystem path first
-  if [[ -L "$ORT_XCFRAMEWORK_BASE" ]]; then
-    ORT_XCFRAMEWORK_REAL=$(cd -P "$ORT_XCFRAMEWORK_BASE" 2>/dev/null && pwd -P)
-    if [[ -d "$ORT_XCFRAMEWORK_REAL" ]]; then
-      echo "=== Resolved xcframework symlink: $ORT_XCFRAMEWORK_BASE -> $ORT_XCFRAMEWORK_REAL ==="
-      ORT_XCFRAMEWORK_BASE="$ORT_XCFRAMEWORK_REAL"
+ORT_VERSION="1.23.2"
+ORT_HF_URL="https://huggingface.co/xybrid-ai/ios-onnxruntime/resolve/main/${ORT_VERSION}/onnxruntime.xcframework.tar.bz2"
+ORT_CACHE_DIR="$HOME/.xybrid/cache/ort-ios/${ORT_VERSION}"
+
+if [[ "$PLATFORM_NAME" == "iphoneos" || "$PLATFORM_NAME" == "iphonesimulator" ]]; then
+  ORT_XCFRAMEWORK_BASE=""
+
+  # --- Path 1: Vendored xcframework (monorepo dev with symlink) ---
+  VENDORED_PATH="$PODS_TARGET_SRCROOT/Frameworks/onnxruntime.xcframework"
+  if [[ -e "$VENDORED_PATH" ]]; then
+    # Resolve symlinks (CocoaPods .symlinks/ breaks relative symlink resolution)
+    if [[ -L "$VENDORED_PATH" ]]; then
+      ORT_XCFRAMEWORK_REAL=$(cd -P "$VENDORED_PATH" 2>/dev/null && pwd -P)
+      if [[ -d "$ORT_XCFRAMEWORK_REAL" ]]; then
+        echo "=== ORT: Using vendored xcframework (resolved symlink) ==="
+        echo "=== ORT: $VENDORED_PATH -> $ORT_XCFRAMEWORK_REAL ==="
+        ORT_XCFRAMEWORK_BASE="$ORT_XCFRAMEWORK_REAL"
+      fi
+    else
+      echo "=== ORT: Using vendored xcframework (direct) ==="
+      ORT_XCFRAMEWORK_BASE="$VENDORED_PATH"
     fi
   fi
 
-  # Determine the correct library path based on platform
+  # --- Path 2: Cached download ---
+  if [[ -z "$ORT_XCFRAMEWORK_BASE" && -d "$ORT_CACHE_DIR/onnxruntime.xcframework" ]]; then
+    echo "=== ORT: Using cached download at $ORT_CACHE_DIR ==="
+    ORT_XCFRAMEWORK_BASE="$ORT_CACHE_DIR/onnxruntime.xcframework"
+  fi
+
+  # --- Path 3: Download from HuggingFace ---
+  if [[ -z "$ORT_XCFRAMEWORK_BASE" ]]; then
+    echo "=== ORT: Downloading ONNX Runtime ${ORT_VERSION} from HuggingFace ==="
+    echo "=== ORT: URL: $ORT_HF_URL ==="
+    mkdir -p "$ORT_CACHE_DIR"
+    ARCHIVE_PATH="$ORT_CACHE_DIR/onnxruntime.xcframework.tar.bz2"
+
+    if ! curl -fSL --progress-bar -o "$ARCHIVE_PATH" "$ORT_HF_URL"; then
+      echo "ERROR: Failed to download ORT ${ORT_VERSION} from HuggingFace"
+      echo "       URL: $ORT_HF_URL"
+      echo "       Check your network connection and that the file exists"
+      rm -f "$ARCHIVE_PATH"
+      exit 1
+    fi
+
+    echo "=== ORT: Extracting xcframework ==="
+    tar -xjf "$ARCHIVE_PATH" -C "$ORT_CACHE_DIR"
+    rm -f "$ARCHIVE_PATH"
+
+    if [[ -d "$ORT_CACHE_DIR/onnxruntime.xcframework" ]]; then
+      echo "=== ORT: Successfully downloaded and cached ==="
+      ORT_XCFRAMEWORK_BASE="$ORT_CACHE_DIR/onnxruntime.xcframework"
+    else
+      echo "ERROR: Extracted archive but onnxruntime.xcframework directory not found"
+      echo "       Contents of $ORT_CACHE_DIR:"
+      ls -la "$ORT_CACHE_DIR/" 2>/dev/null
+      exit 1
+    fi
+  fi
+
+  # --- Set ORT_LIB_LOCATION from resolved xcframework ---
   if [[ "$PLATFORM_NAME" == "iphoneos" ]]; then
     ORT_LIB_PATH="$ORT_XCFRAMEWORK_BASE/ios-arm64"
   else
-    # Simulator build - we only have arm64 for now (M1+ Macs)
+    # Simulator — currently only arm64 (M1+ Macs)
     ORT_LIB_PATH="$ORT_XCFRAMEWORK_BASE/ios-arm64"
   fi
 
   if [[ -f "$ORT_LIB_PATH/libonnxruntime.a" ]]; then
-    # Only set ORT_LIB_LOCATION for static library linking
-    # Do NOT set ORT_IOS_XCFWK_LOCATION since we don't have a .framework bundle
     export ORT_LIB_LOCATION="$ORT_LIB_PATH"
-    echo "=== Setting ORT_LIB_LOCATION=$ORT_LIB_LOCATION ==="
-    echo "=== Found libonnxruntime.a for static linking ==="
-    echo "=== Using custom ONNX Runtime 1.23.2 with CoreML EP ==="
+    echo "=== ORT: ORT_LIB_LOCATION=$ORT_LIB_LOCATION ==="
+    echo "=== ORT: Using ONNX Runtime ${ORT_VERSION} with CoreML EP ==="
     ls -la "$ORT_LIB_PATH/libonnxruntime.a"
   else
-    echo "ERROR: Custom ONNX Runtime static library not found"
+    echo "ERROR: libonnxruntime.a not found after ORT resolution"
     echo "       Expected: $ORT_LIB_PATH/libonnxruntime.a"
-    ls -la "$PODS_TARGET_SRCROOT/Frameworks/" 2>/dev/null || echo "       Frameworks directory not found"
+    echo "       xcframework base: $ORT_XCFRAMEWORK_BASE"
     ls -la "$ORT_XCFRAMEWORK_BASE/" 2>/dev/null || echo "       xcframework directory not found"
     exit 1
   fi
+
+  # Export the resolved xcframework base for podspec xcconfig path references
+  export XYBRID_ORT_XCFRAMEWORK="$ORT_XCFRAMEWORK_BASE"
 fi
 
 FLUTTER_EXPORT_BUILD_ENVIRONMENT=(
