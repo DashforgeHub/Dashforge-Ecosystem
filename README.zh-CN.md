@@ -1,3 +1,4 @@
+<div align="center">
 <p align="center">
   <a href="./README.md">English</a> · <a href="./README.zh-CN.md">简体中文</a>
 </p>
@@ -10,7 +11,7 @@
 <h1 align="center">Xybrid</h1>
 
 <p align="center">
-  <strong>移动端、桌面端、边缘端的设备端 AI。</strong><br/>
+  <strong>为移动、桌面以及边缘设备的本地AI。</strong><br/>
   在本地运行语音、语言和视觉模型——隐私、离线、快速。<br/>
   适用于任何应用，包括游戏 🕹️
 </p>
@@ -59,8 +60,7 @@
 [pubdev-url]: https://pub.dev/packages/xybrid_flutter
 [maven-shield]: https://img.shields.io/maven-central/v/ai.xybrid/xybrid-kotlin?style=flat&label=Maven%20Central
 [maven-url]: https://central.sonatype.com/artifact/ai.xybrid/xybrid-kotlin
-
----
+</div>
 
 <p align="center">
   <img src="docs/demo-desktop.gif" alt="Desktop demo" width="540">&nbsp;&nbsp;&nbsp;&nbsp;
@@ -73,7 +73,7 @@
 
 ## SDK
 
-Xybrid 是一个 **Rust 驱动的运行时**，为所有主流平台提供原生绑定。选择你的 SDK：
+Xybrid 是一个 **Rust 驱动的运行时**，为所有主流平台提供原生绑定：
 
 | SDK | 平台 | 安装 | 状态 | 示例 |
 |-----|------|------|------|------|
@@ -105,7 +105,7 @@ dependencies:
 
 ```gradle
 dependencies {
-    implementation("ai.xybrid:xybrid-kotlin:0.1.0-alpha7")
+    implementation("ai.xybrid:xybrid-kotlin:0.1.0-beta1")
 }
 ```
 
@@ -115,9 +115,9 @@ dependencies {
 
 各平台的详细设置请参阅对应 SDK 的 README：[Flutter](bindings/flutter/) · [Unity](bindings/unity/) · [Swift](bindings/apple/) · [Kotlin](bindings/kotlin/) · [Rust](crates/)
 
-### 单模型
+### 单一模型
 
-通过 CLI 一行命令运行模型，或在任何 SDK 中三行代码搞定：
+通过 CLI 一行命令运行模型，或在任何 SDK 中用三行代码搞定：
 
 **CLI:**
 ```sh
@@ -128,40 +128,40 @@ xybrid run kokoro-82m --input "国破山河在，城春草木深" -o output.wav
 ```dart
 final model = await Xybrid.model(modelId: 'kokoro-82m').load();
 final result = await model.run(envelope: Envelope.text(text: '国破山河在，城春草木深'));
-// result → 24kHz WAV 音频
+// 输出 → 24kHz WAV 音频
 ```
 
 **Kotlin:**
 ```kotlin
 val model = Xybrid.model(modelId = "kokoro-82m").load()
 val result = model.run(envelope = XybridEnvelope.Text("国破山河在，城春草木深"))
-// result → 24kHz WAV 音频
+// 输出 → 24kHz WAV 音频
 ```
 
 **Swift:**
 ```swift
 let model = try Xybrid.model(modelId: "kokoro-82m").load()
 let result = try model.run(envelope: .text("国破山河在，城春草木深"))
-// result → 24kHz WAV 音频
+// 输出 → 24kHz WAV 音频
 ```
 
 **Unity (C#):**
 ```csharp
 var model = Xybrid.Model(modelId: "kokoro-82m").Load();
 var result = model.Run(envelope: Envelope.Text("国破山河在，城春草木深"));
-// result → 24kHz WAV 音频
+// 输出 → 24kHz WAV 音频
 ```
 
 **Rust:**
 ```rust
 let model = Xybrid::model("kokoro-82m").load()?;
 let result = model.run(&Envelope::text("国破山河在，城春草木深"))?;
-// result → 24kHz WAV 音频
+// 输出 → 24kHz WAV 音频
 ```
 
-### 管道
+### 流水线
 
-将模型链接在一起——用 3 行 YAML 构建语音助手：
+将模型链接在一起——用 3 行 YAML 搭建语音助手：
 
 ```yaml
 # voice-assistant.yaml
@@ -215,30 +215,30 @@ let result = pipeline.run(&Envelope::audio(audio_bytes))?;
 
 ## 支持的模型
 
-所有模型完全在设备端运行。无需云端，无需 API 密钥。使用 `xybrid models list` 浏览完整的模型注册表。
+所有模型完全在设备端运行。无需云端，无需 API 密钥。使用 `xybrid models list` 查看完整的模型注册表。
 
 ### 语音转文本
 
-| 模型 | 参数量 | 格式 | 描述 |
+| 模型 | 参数量 | 格式 | 简介 |
 |------|--------|------|------|
 | Whisper Tiny | 39M | SafeTensors | 多语言转录（Candle 运行时） |
 | Wav2Vec2 Base | 95M | ONNX | 英语 ASR，CTC 解码 |
 
 ### 文本转语音
 
-| 模型 | 参数量 | 格式 | 描述 |
+| 模型 | 参数量 | 格式 | 简介 |
 |------|--------|------|------|
 | Kokoro 82M | 82M | ONNX | 高质量，24 种自然声音 |
 | KittenTTS Nano | 15M | ONNX | 超轻量级，8 种声音 |
 
 ### 语言模型
 
-| 模型 | 参数量 | 格式 | 描述 |
+| 模型 | 参数量 | 格式 | 简介 |
 |------|--------|------|------|
-| Gemma 3 1B | 1B | GGUF Q4_K_M | Google 移动端优化 LLM |
-| Llama 3.2 1B | 1B | GGUF Q4_K_M | Meta 通用模型，128K 上下文 |
-| Qwen 2.5 0.5B | 500M | GGUF Q4_K_M | 紧凑型设备端对话模型 |
-| SmolLM2 360M | 360M | GGUF Q4_K_M | 最佳微型 LLM，优秀的质量/体积比 |
+| Gemma 3 1B | 1B | GGUF Q4_K_M | Google 为移动端优化的模型 |
+| Llama 3.2 1B | 1B | GGUF Q4_K_M | Meta 的通用模型，128K 上下文 |
+| Qwen 2.5 0.5B | 500M | GGUF Q4_K_M | 紧凑的本地聊天模型 |
+| SmolLM2 360M | 360M | GGUF Q4_K_M | 最佳的微型模型，优秀的质量/体积比 |
 
 ### 即将推出
 
@@ -248,15 +248,15 @@ let result = pipeline.run(&Envelope::audio(audio_bytes))?;
 | Qwen3 0.6B | LLM | 600M | P2 | 计划中 |
 | Trinity Nano | LLM (MoE) | 6B（1B 活跃） | P2 | 计划中 |
 | LFM2 700M | LLM | 700M | P2 | 计划中 |
-| Nomic Embed Text v1.5 | 嵌入 | 137M | P1 | 阻塞中（需要 Tokenize/MeanPool 步骤） |
+| Nomic Embed Text v1.5 | 嵌入 | 137M | P1 | 受阻（需要 Tokenize/MeanPool 步骤） |
 | LFM2-VL 450M | 视觉 | 450M | P2 | 计划中 |
 | Whisper Tiny CoreML | ASR | 39M | P2 | 计划中 |
-| Qwen3-TTS 0.6B | TTS | 600M | P2 | 阻塞中（需要自定义 SafeTensors 运行时） |
-| Chatterbox Turbo | TTS | 350M | P3 | 阻塞中（需要 ModelGraph 模板） |
+| Qwen3-TTS 0.6B | TTS | 600M | P2 | 受阻（需要自定义 SafeTensors 运行时） |
+| Chatterbox Turbo | TTS | 350M | P3 | 受阻（需要 ModelGraph 模板） |
 
 ---
 
-## 功能特性
+## 功能
 
 | 能力 | iOS | Android | macOS | Linux | Windows |
 |------|-----|---------|-------|-------|---------|
@@ -265,7 +265,7 @@ let result = pipeline.run(&Envelope::audio(audio_bytes))?;
 | 语言模型 | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 视觉模型 | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 嵌入模型 | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 管道编排 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 流水线编排 | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 模型下载与缓存 | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 硬件加速 | Metal, ANE | CPU | Metal, ANE | CUDA | CUDA |
 
@@ -273,10 +273,10 @@ let result = pipeline.run(&Envelope::audio(audio_bytes))?;
 
 ## 为什么选择 Xybrid？
 
-- **隐私优先** — 所有推理在设备端运行。你的数据永远不会离开设备。
+- **隐私优先** — 所有推理在设备端运行。你的数据永远不会离开你的设备。
 - **离线可用** — 初次模型下载后无需互联网。
-- **跨平台** — iOS、Android、macOS、Linux 和 Windows 使用统一 API。
-- **管道编排** — 在单次调用中链接多个模型（ASR → LLM → TTS）。
+- **跨平台** — iOS、Android、macOS、Linux 和 Windows 使用统一的 API。
+- **流水线编排** — 在单次调用中链接多个模型（ASR → LLM → TTS）。
 - **自动优化** — 在 Apple Neural Engine、Metal 和 CUDA 上进行硬件加速。
 
 ---
@@ -289,7 +289,7 @@ let result = pipeline.run(&Envelope::audio(audio_bytes))?;
 
 ## 贡献
 
-我们欢迎贡献！请参阅 [CONTRIBUTING.md](./CONTRIBUTING.md) 了解开发环境设置、提交 Pull Request 和添加新模型的指南。
+我们欢迎贡献！请参阅 [CONTRIBUTING.md](./CONTRIBUTING.md) 了解开发环境设置、提交 PR 和添加新模型的指南。
 
 ## Star History
 
