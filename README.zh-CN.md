@@ -67,6 +67,10 @@
   <img src="docs/demo-android.gif" alt="Android demo" width="150">
 </p>
 
+<p align="center">
+  <img src="docs/game-demo.gif" alt="游戏演示" width="540">
+</p>
+
 ## SDK
 
 Xybrid 是一个 **Rust 驱动的运行时**，为所有主流平台提供原生绑定。选择你的 SDK：

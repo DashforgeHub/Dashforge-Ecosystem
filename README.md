@@ -67,6 +67,10 @@
   <img src="docs/demo-android.gif" alt="Android demo" width="150">
 </p>
 
+<p align="center">
+  <img src="docs/game-demo.gif" alt="Game demo" width="540">
+</p>
+
 ## SDKs
 
 Xybrid is a **Rust-powered runtime** with native bindings for every major platform.
