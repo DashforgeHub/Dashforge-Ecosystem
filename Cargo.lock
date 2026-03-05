@@ -4139,7 +4139,7 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
  "urlencoding",
- "uuid 1.21.0",
+ "uuid 1.22.0",
  "variantly",
  "vob",
 ]
@@ -4172,7 +4172,7 @@ dependencies = [
  "tokio-tungstenite",
  "tracing",
  "utoipa",
- "uuid 1.21.0",
+ "uuid 1.22.0",
 ]
 
 [[package]]
@@ -7984,9 +7984,9 @@ dependencies = [
 
 [[package]]
 name = "uuid"
-version = "1.21.0"
+version = "1.22.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b672338555252d43fd2240c714dc444b8c6fb0a5c5335e65a07bba7742735ddb"
+checksum = "a68d3c8f01c0cfa54a75291d83601161799e4a89a39e0929f4b0354d88757a37"
 dependencies = [
  "getrandom 0.4.2",
  "js-sys",
@@ -9014,7 +9014,7 @@ dependencies = [
  "tracing",
  "tracing-flame",
  "tracing-subscriber",
- "uuid 1.21.0",
+ "uuid 1.22.0",
  "xybrid-core",
  "xybrid-sdk",
 ]
@@ -9066,7 +9066,7 @@ dependencies = [
  "unicode-normalization",
  "ureq 2.12.1",
  "url",
- "uuid 1.21.0",
+ "uuid 1.22.0",
  "walkdir",
  "xybrid-sdk",
  "zstd",
@@ -9110,7 +9110,7 @@ dependencies = [
  "tokio",
  "tokio-stream",
  "ureq 2.12.1",
- "uuid 1.21.0",
+ "uuid 1.22.0",
  "xybrid-core",
  "xybrid-macros",
 ]
