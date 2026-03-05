@@ -9,7 +9,7 @@
 use crate::runtime_adapter::onnx::ONNXSession;
 use crate::runtime_adapter::AdapterError;
 use ndarray::{Array1, Array2, ArrayD};
-use ort::tensor::TensorElementType;
+use ort::value::TensorElementType;
 use ort::value::Value;
 use std::collections::HashMap;
 

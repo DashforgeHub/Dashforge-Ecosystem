@@ -29,7 +29,7 @@ use super::execution_provider::ExecutionProviderKind;
 use crate::runtime_adapter::{AdapterError, AdapterResult};
 use ndarray::{ArrayD, IxDyn};
 use ort::session::{builder::GraphOptimizationLevel, Session};
-use ort::tensor::TensorElementType;
+use ort::value::TensorElementType;
 use ort::value::Value;
 use std::collections::HashMap;
 use std::path::Path;
