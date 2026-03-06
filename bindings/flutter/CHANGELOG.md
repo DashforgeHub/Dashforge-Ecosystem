@@ -1,12 +1,14 @@
+## 0.1.0-beta2
+
+* Version bump — core runtime fix (reverted ORT to `2.0.0-rc.11`). No Flutter API changes.
+
 ## 0.1.0-beta1
 
-### Features
-* _TODO: Fill in highlights for this release_
+* Version bump to track core release. No Flutter API changes.
 
 ## 0.1.0-alpha8
 
-### Features
-* _TODO: Fill in highlights for this release_
+* Version bump to track core release. No Flutter API changes.
 
 ## 0.1.0-alpha7
 

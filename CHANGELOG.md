@@ -5,46 +5,196 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0-beta2] - 2026-03-06
+
+### Fixed
+
+- Reverted to ort `2.0.0-rc.11` to resolve compatibility regressions from rc.12
+
+---
+
 ## [0.1.0-beta1] - 2026-03-04
 
 ### Added
-- _TODO: Fill in highlights for this release_
+
+- **CLI modular refactor**: Split monolithic `main.rs` into modular command files
+- **Bundle download**: `xybrid fetch` now supports direct `.xyb` bundle downloads
+- **Missing model warnings**: CLI warns when referenced models are not cached
+- **Pass-through model resolution**: Models resolve through registry transparently
+- **ORT upgrade**: Upgraded to ort 2.0.0-rc.12 (reverted in beta2)
+- Chinese README translation (`README.zh-CN.md`)
 
 ### Changed
-- _TODO: Fill in changes_
+
+- Updated version-sync.sh tooling
+- Updated API reference documentation
+- Unity build artifacts updated
 
 ---
 
 ## [0.1.0-alpha8] - 2026-03-01
 
 ### Added
-- _TODO: Fill in highlights for this release_
+
+- **OpenPhonemizer support**: New phonemizer backend option (#10)
+- **Per-model chunk sizing**: Model metadata can now specify chunk size for execution
+- **Unified API contract**: Added `api-surface.yaml` and `api-contract-check.sh` for SDK contract validation
+- **Telemetry integration tests**: OpenTelemetry span exporter (`UreqSpanExporter`) in xybrid-sdk
+- **OpenTelemetry API**: Added tracing API to xybrid-core
+- **KittenTTS Micro 0.8**: New model fixture
+- Chinese README (`README.zh-CN.md`)
 
 ### Changed
-- _TODO: Fill in changes_
+
+- Improved G2P / dictionary quality
+- Adaptive LLM defaults for Android (performance tuning)
+- Telemetry cleanup and integration test improvements
+
+### Fixed
+
+- Removed `opt_level()` and environment variable usage in tests
+- Fixed integration test model fixtures
 
 ---
 
 ## [0.1.0-alpha7] - 2026-02-18
 
 ### Added
+
 - **GenerationConfig SDK propagation**: Surfaced `GenerationConfig` (temperature, top_p, max_tokens, min_p, top_k, repetition_penalty, stop_sequences) through all three SDK bindings
   - Flutter/Dart: `GenerationConfig` class with `greedy()` / `creative()` presets, optional `config` parameter on all run/streaming methods
   - Kotlin/Android: `XybridGenerationConfig` UniFFI Record with `GenerationConfigs.greedy()` / `creative()` presets
   - Unity/C#: `GenerationConfig : IDisposable` with opaque handle pattern, setter methods, `Greedy()` / `Creative()` factories
 
 ### Fixed
+
 - Rust SDK `run_async()` now accepts `Option<&GenerationConfig>` (was hard-coded to `None`, blocking Kotlin config passthrough)
+- Fixed LLM generation max tokens on macOS
 
 ---
 
-## [0.1.0-alpha6] - 2026-02-17
+## [0.1.0-alpha6] - 2026-02-20
 
 ### Added
-- _TODO: Fill in highlights for this release_
+
+- **Flutter pub.dev preparation**: Prepared `xybrid_flutter` for pub.dev publication
+- **Flutter model status APIs**: Exposed model status query APIs in Flutter SDK
+- **ORT binary externalization**: Externalized ORT binaries from Flutter package (36MB → 137KB)
+
+### Fixed
+
+- Flutter publish configuration fixes
+- Model offloading memory issue resolved
+
+---
+
+## [0.1.0-alpha5] - 2026-02-16
+
+### Added
+
+- **TTS quality improvements** (#9): Silence tokens, center-break chunking, voice mixing, CJK punctuation, inter-chunk crossfading, configurable speed
+- **KittenTTS Integration V1.0 Prep**: Fixed phonemizer mismatch (CmuDict → Misaki), Python parity validation
+- **Composable model system**: Pluggable phonemizer backends for TTS
+
+### Fixed
+
+- Phonemization token mapping fixes
+- Backend phonemization boundary fixes
+- Regenerated UniFFI Kotlin bindings
+
+---
+
+## [0.1.0-alpha4] - 2026-02-14
+
+### Added
+
+- **Kokoro TTS quality parity**: Closed quality gap with official Python pipeline (#8)
+- **Swift/Kotlin voice selection**: Voice selection support in Apple and Kotlin SDKs
+- **Unity TTS and voice support**: Full TTS pipeline with voice selection in Unity SDK
+
+### Fixed
+
+- Resolved chat template token leaks in LLM output
+- Converted broken doctests from `no_run` to `ignore` across all crates
+- Resolved all CI clippy failures
 
 ### Changed
-- _TODO: Fill in changes_
+
+- Documentation cleanup across README, Kotlin docs
+- CI workflow updates
+
+---
+
+## [0.1.0-alpha3] - 2026-02-12
+
+### Added
+
+- **Kotlin Android SDK**: Real inference via UniFFI + TemplateExecutor with ORT bundling
+- **Metadata generation tooling**: Automated model metadata generation
+- **Flutter remote usage example**: Example demonstrating remote model loading
+- **Unity iOS build support**: C FFI library building for iOS targets
+- **min_p sampling**: Added to llama.cpp sampler chain (default 0.05)
+
+### Fixed
+
+- **Thread safety**: Removed unsafe `impl Sync for LlamaContext`, added Mutex wrapping
+- **Multi-token EOG**: `llama_vocab_is_eog()` for Llama 3, Gemma, Qwen end-of-generation detection
+- **llama.cpp audit fixes #4–#13**: Comprehensive wrapper audit
+- **Hot loop optimization**: Hoisted `candidates_data` allocation out of generation hot loop
+- **Callback ordering**: Check end-of-generation BEFORE emitting to callback
+- **flash_attn_type**: Use enum for context params instead of raw values
+- **Windows CRT mismatch**: Static CRT (/MT) for llama_wrapper to match esaxx-rs
+- **Windows MSVC CRT**: Resolved CRT mismatch for CLI builds
+- **Git Bash CFLAGS**: Use `-MD` not `/MD` to prevent path mangling
+- Unity build folder output directories corrected
+- llama.cpp pub cache failure resolved
+- Release build failures across all platforms (#6)
+
+### Changed
+
+- Updated Kotlin bindings publish configuration
+- Updated `libxybrid_ffi.dylib` for latest SDK
+- Updated LLM demo screen in Flutter example app
+- CI workflow updates (test-ci.yml, release.yml)
+
+---
+
+## [0.1.0-alpha2] - 2026-02-10
+
+### Added
+
+- Unity macOS build artifacts
+- Sample and integration test cleanup
+
+### Fixed
+
+- Prevented heap corruption in llama.cpp when prompt exceeds 512 tokens
+
+---
+
+## [0.1.0-alpha1] - 2026-02-09
+
+### Added
+
+- **Version bump tooling**: `version-sync.sh`, `just version`, `just bump-version`
+- **Unity C# SDK**: Exposed xyb bundler to C# library, updated to latest APIs
+- **Open source community files**: CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, GitHub templates
+- **README overhaul**: SDK hierarchy, Quick Start, Models by task, Features matrix
+- **Documentation lean-down**: Restructured internals to concepts, cleaned up docs
+- **CI infrastructure**: sccache, FRB binary caching, FRB staleness check, workflow_dispatch
+- **Flutter precompile configuration**
+
+### Fixed
+
+- Force `/MD` (dynamic CRT) on Windows builds to fix esaxx-rs
+- Added missing `-std=c++17` in cc-rs build
+- FRB install fixes
+- Removed `NativeMethods.Bundle.cs`
+
+### Changed
+
+- Converted llama.cpp to submodule
+- Replaced cloning with submodule in builds
 
 ---
 
@@ -55,6 +205,7 @@ First production release of xybrid - a hybrid cloud-edge ML inference orchestrat
 ### Added
 
 #### CLI
+
 - `xybrid models list` - List models from registry
 - `xybrid models search <query>` - Search models
 - `xybrid models info <id>` - Show model details
@@ -71,6 +222,7 @@ First production release of xybrid - a hybrid cloud-edge ML inference orchestrat
 - `xybrid run --trace` - Execute with tracing
 
 #### Core Runtime
+
 - ONNX Runtime execution with preprocessing/postprocessing
 - Whisper ASR with Metal acceleration (macOS/iOS)
 - Metadata-driven model execution
@@ -78,12 +230,14 @@ First production release of xybrid - a hybrid cloud-edge ML inference orchestrat
 - CoreML/ANE acceleration for Apple devices
 
 #### LLM Inference
+
 - Local LLM execution for GGUF models
 - Desktop: CPU, Metal (macOS), CUDA (Linux/Windows)
 - Android: Optimized for ARM devices
 - Runtime backend selection via model metadata
 
 #### SDK
+
 - `PipelineRef::from_yaml()` - Instant YAML parsing
 - `Pipeline::load_models()` - Model preloading with progress
 - `Pipeline::run()` - Execute inference
@@ -91,16 +245,19 @@ First production release of xybrid - a hybrid cloud-edge ML inference orchestrat
 - Telemetry with batching
 
 #### Preprocessing
+
 - `AudioDecode` - WAV bytes to float samples
 - `Phonemize` - Text to phoneme tokens
 - `Tokenize` - Text tokenization
 
 #### Postprocessing
+
 - `CTCDecode` - Logits to text transcription
 - `TTSAudioEncode` - Waveform to PCM audio bytes
 - `ArgMax` - Classification output
 
 ### Models Supported
+
 - **Kokoro-82M** (TTS) - 24 voices
 - **KittenTTS-nano** (TTS) - Lightweight
 - **Whisper-tiny** (ASR) - Real-time capable
@@ -123,6 +280,7 @@ First production release of xybrid - a hybrid cloud-edge ML inference orchestrat
 ## [Unreleased]
 
 ### Planned
+
 - Android NNAPI execution provider
 - MLX runtime for Apple Silicon
 - Voice cloning support
