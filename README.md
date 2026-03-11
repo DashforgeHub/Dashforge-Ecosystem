@@ -95,7 +95,7 @@ https://github.com/xybrid-ai/xybrid.git#upm
 ```
 
 > The `upm` branch contains pre-built native libraries for all platforms.
-> To pin a specific version: `https://github.com/xybrid-ai/xybrid.git#upm/v0.1.0-beta4`
+> To pin a specific version: `https://github.com/xybrid-ai/xybrid.git#upm/v0.1.0-beta5`
 
 **Flutter** — add to your `pubspec.yaml`:
 
@@ -108,7 +108,7 @@ dependencies:
 
 ```gradle
 dependencies {
-    implementation("ai.xybrid:xybrid-kotlin:0.1.0-beta4")
+    implementation("ai.xybrid:xybrid-kotlin:0.1.0-beta5")
 }
 ```
 
@@ -234,6 +234,8 @@ All models run entirely on-device. No cloud, no API keys required. Browse the fu
 | Gemma 3 1B | 1B | GGUF Q4_K_M | Google's mobile-optimized LLM |
 | Llama 3.2 1B | 1B | GGUF Q4_K_M | Meta's general purpose, 128K context |
 | Qwen 2.5 0.5B | 500M | GGUF Q4_K_M | Compact on-device chat |
+| Qwen 3.5 0.8B | 800M | GGUF Q4_K_M | Latest Qwen with reasoning (thinking mode) |
+| Qwen 3.5 2B | 2B | GGUF Q4_K_M | Larger Qwen 3.5 with extended reasoning |
 | SmolLM2 360M | 360M | GGUF Q4_K_M | Best tiny LLM, excellent quality/size ratio |
 
 ### Coming Soon

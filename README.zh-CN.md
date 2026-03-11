@@ -95,7 +95,7 @@ https://github.com/xybrid-ai/xybrid.git#upm
 ```
 
 > `upm` 分支包含所有平台的预编译原生库。
-> 固定版本：`https://github.com/xybrid-ai/xybrid.git#upm/v0.1.0-beta3`
+> 固定版本：`https://github.com/xybrid-ai/xybrid.git#upm/v0.1.0-beta5`
 
 **Flutter** — 添加到你的 `pubspec.yaml`：
 
@@ -108,7 +108,7 @@ dependencies:
 
 ```gradle
 dependencies {
-    implementation("ai.xybrid:xybrid-kotlin:0.1.0-beta1")
+    implementation("ai.xybrid:xybrid-kotlin:0.1.0-beta5")
 }
 ```
 
@@ -241,6 +241,8 @@ let result = pipeline.run(&Envelope::audio(audio_bytes))?;
 | Gemma 3 1B | 1B | GGUF Q4_K_M | Google 为移动端优化的模型 |
 | Llama 3.2 1B | 1B | GGUF Q4_K_M | Meta 的通用模型，128K 上下文 |
 | Qwen 2.5 0.5B | 500M | GGUF Q4_K_M | 紧凑的本地聊天模型 |
+| Qwen 3.5 0.8B | 800M | GGUF Q4_K_M | 最新 Qwen，支持推理（思考模式） |
+| Qwen 3.5 2B | 2B | GGUF Q4_K_M | 更大的 Qwen 3.5，扩展推理能力 |
 | SmolLM2 360M | 360M | GGUF Q4_K_M | 最佳的微型模型，优秀的质量/体积比 |
 
 ### 即将推出

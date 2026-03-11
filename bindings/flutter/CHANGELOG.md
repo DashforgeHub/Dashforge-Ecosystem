@@ -1,3 +1,8 @@
+## 0.1.0-beta5
+
+* Qwen 3.5 model support via updated llama.cpp backend
+* Automatic `<think>` tag stripping for reasoning models
+
 ## 0.1.0-beta4
 
 * Version bump to track core release. No Flutter API changes.

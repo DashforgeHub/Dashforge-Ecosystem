@@ -13,6 +13,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.1.0-beta5] - 2026-03-11
+
+### Added
+
+- **Qwen 3.5 support**: Updated vendored llama.cpp to support `qwen35` architecture (0.8B and 2B models)
+- **Think tag stripping**: Automatically strips `<think>...</think>` reasoning blocks from Qwen 3.5 and similar models in both batch and streaming generation
+- **`XYBRID_LLAMACPP_VERBOSITY` env var**: Surface llama.cpp C++ logs for debugging model load failures (set to 4 for full debug output)
+
+### Changed
+
+- **Vendored llama.cpp**: Updated from Jan 30 to Mar 11 2026 (adds qwen35, qwen3next architectures)
+- **Improved error messages**: Model load failures now include file path and hint about unsupported architectures
+
+---
+
 ## [0.1.0-beta4] - 2026-03-10
 
 ### Added
