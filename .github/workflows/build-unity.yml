@@ -586,9 +586,11 @@ jobs:
           find "$PACKAGE_DIR" -name ".DS_Store" -delete
 
           # Switch to upm branch (orphan if it doesn't exist)
+          # Use -f to discard downloaded native binaries already in working tree
+          # (they're safely copied to $PACKAGE_DIR above)
           if git ls-remote --exit-code origin upm > /dev/null 2>&1; then
             git fetch origin upm
-            git checkout upm
+            git checkout -f upm
             # Clear all existing files
             git rm -rf . > /dev/null 2>&1 || true
           else
