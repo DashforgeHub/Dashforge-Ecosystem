@@ -786,8 +786,14 @@ fn build_ffi(
     }
 
     // Deploy to Unity if requested
+    // iOS targets produce a static library (.a), not a dylib — deploy the .a
     if deploy_unity {
-        deploy_ffi_to_unity(&dylib_path, target.as_deref())?;
+        let unity_lib_path = if target_str.contains("apple-ios") {
+            &staticlib_path
+        } else {
+            &dylib_path
+        };
+        deploy_ffi_to_unity(unity_lib_path, target.as_deref())?;
     }
 
     Ok(())
