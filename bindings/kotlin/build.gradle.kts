@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "ai.xybrid"
-version = "0.1.0-beta6-pre"
+version = "0.1.0-beta6-pre2"
 
 android {
     namespace = "ai.xybrid"
