@@ -3469,7 +3469,7 @@ dependencies = [
 
 [[package]]
 name = "integration-tests"
-version = "0.1.0-beta6-pre3"
+version = "0.1.0-beta6-pre4"
 dependencies = [
  "anyhow",
  "dirs 5.0.1",
@@ -8981,7 +8981,7 @@ dependencies = [
 
 [[package]]
 name = "xtask"
-version = "0.1.0-beta6-pre3"
+version = "0.1.0-beta6-pre4"
 dependencies = [
  "anyhow",
  "clap 4.6.0",
@@ -8994,7 +8994,7 @@ dependencies = [
 
 [[package]]
 name = "xybrid-cli"
-version = "0.1.0-beta6-pre3"
+version = "0.1.0-beta6-pre4"
 dependencies = [
  "anyhow",
  "chrono",
@@ -9020,7 +9020,7 @@ dependencies = [
 
 [[package]]
 name = "xybrid-core"
-version = "0.1.0-beta6-pre3"
+version = "0.1.0-beta6-pre4"
 dependencies = [
  "anyhow",
  "base64 0.21.7",
@@ -9073,7 +9073,7 @@ dependencies = [
 
 [[package]]
 name = "xybrid-ffi"
-version = "0.1.0-beta6-pre3"
+version = "0.1.0-beta6-pre4"
 dependencies = [
  "cbindgen",
  "csbindgen",
@@ -9084,7 +9084,7 @@ dependencies = [
 
 [[package]]
 name = "xybrid-macros"
-version = "0.1.0-beta6-pre3"
+version = "0.1.0-beta6-pre4"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -9093,7 +9093,7 @@ dependencies = [
 
 [[package]]
 name = "xybrid-sdk"
-version = "0.1.0-beta6-pre3"
+version = "0.1.0-beta6-pre4"
 dependencies = [
  "anyhow",
  "chrono",
@@ -9116,7 +9116,7 @@ dependencies = [
 
 [[package]]
 name = "xybrid-uniffi"
-version = "0.1.0-beta6-pre3"
+version = "0.1.0-beta6-pre4"
 dependencies = [
  "serde_json",
  "thiserror 1.0.69",
@@ -9126,7 +9126,7 @@ dependencies = [
 
 [[package]]
 name = "xybrid_flutter"
-version = "0.1.0-beta6-pre3"
+version = "0.1.0-beta6-pre4"
 dependencies = [
  "android_logger 0.14.1",
  "flutter_rust_bridge",
