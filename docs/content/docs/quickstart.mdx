@@ -12,11 +12,7 @@ Get Xybrid running in your app with a few lines of code. Choose your SDK below.
 ```yaml
 # pubspec.yaml
 dependencies:
-  xybrid_flutter:
-    git:
-      url: https://github.com/xybrid-ai/xybrid.git
-      ref: main
-      path: bindings/flutter
+  xybrid_flutter: ^0.1.0-beta5
 ```
 
 ```bash
@@ -84,7 +80,7 @@ let result = try model.run(envelope: envelope)
 ```kotlin
 // build.gradle.kts
 dependencies {
-    implementation("ai.xybrid:xybrid-kotlin:0.1.0-beta4")
+    implementation("ai.xybrid:xybrid-kotlin:0.1.0-beta5")
 }
 ```
 
@@ -118,7 +114,7 @@ https://github.com/xybrid-ai/xybrid.git#upm
 Or pin a specific version:
 
 ```
-https://github.com/xybrid-ai/xybrid.git#upm/v0.1.0-beta4
+https://github.com/xybrid-ai/xybrid.git#upm/v0.1.0-beta5
 ```
 
 **Run inference**

@@ -12,11 +12,7 @@ description: 几分钟内开始使用 Xybrid
 ```yaml
 # pubspec.yaml
 dependencies:
-  xybrid_flutter:
-    git:
-      url: https://github.com/xybrid-ai/xybrid.git
-      ref: main
-      path: bindings/flutter
+  xybrid_flutter: ^0.1.0-beta5
 ```
 
 ```bash
@@ -28,12 +24,12 @@ flutter pub get
 ```dart
 import 'package:xybrid_flutter/xybrid_flutter.dart';
 
-await RustLib.init();
+await Xybrid.init();
 
 // 加载模型并运行文本转语音
-final model = await Xybrid.model(modelId: 'kokoro-82m').load();
+final model = await Xybrid.model('kokoro-82m').load();
 final result = await model.run(
-  envelope: Envelope.text(text: "Hello from Xybrid!"),
+  XybridEnvelope.text("Hello from Xybrid!"),
 );
 
 // result.audioBytes 包含生成的语音音频
@@ -84,7 +80,7 @@ let result = try model.run(envelope: envelope)
 ```kotlin
 // build.gradle.kts
 dependencies {
-    implementation("ai.xybrid:xybrid:0.1.0")
+    implementation("ai.xybrid:xybrid-kotlin:0.1.0-beta5")
 }
 ```
 
@@ -113,17 +109,13 @@ val result = model.run(envelope)
 在 Unity 中，前往 **Window > Package Manager > + > Add package from git URL**，输入：
 
 ```
-https://github.com/xybrid-ai/xybrid.git?path=bindings/unity
+https://github.com/xybrid-ai/xybrid.git#upm
 ```
 
-或添加到 `Packages/manifest.json`：
+或指定版本：
 
-```json
-{
-  "dependencies": {
-    "ai.xybrid.sdk": "https://github.com/xybrid-ai/xybrid.git?path=bindings/unity"
-  }
-}
+```
+https://github.com/xybrid-ai/xybrid.git#upm/v0.1.0-beta5
 ```
 
 **运行推理**

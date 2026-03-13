@@ -247,7 +247,7 @@ Precompiled Rust binaries are available for all platforms via [cargokit](https:/
 
 A full example app with 8 demo screens (TTS, ASR, LLM chat, pipelines, device info) is available:
 
-```
+```sh
 https://github.com/xybrid-ai/xybrid/tree/main/examples/flutter
 ```
 
