@@ -101,7 +101,7 @@ fun XybridExampleApp() {
                     try {
                         val result = withContext(Dispatchers.IO) {
                             val envelope = Envelope.text(inputText)
-                            model.run(envelope)
+                            model.run(envelope, null)
                         }
 
                         if (result.success) {

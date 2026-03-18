@@ -24,6 +24,13 @@ val MODEL_CATALOG = listOf(
         defaultInput = "Hello, welcome to Xybrid!"
     ),
     CatalogModel(
+        id = "kitten-tts-nano-0.8",
+        displayName = "Kitten TTs Nano 0.8",
+        task = "Text-to-Speech",
+        description = "High-quality English TTS model",
+        defaultInput = "Hello, welcome to Xybrid!"
+    ),
+    CatalogModel(
         id = "whisper-tiny",
         displayName = "Whisper Tiny",
         task = "Speech Recognition",
