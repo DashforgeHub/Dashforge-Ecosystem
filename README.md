@@ -274,6 +274,40 @@ All models run entirely on-device. No cloud, no API keys required. Browse the fu
 | Qwen3-TTS 0.6B | TTS | 600M | P2 | Blocked (needs custom SafeTensors runtime) |
 | Chatterbox Turbo | TTS | 350M | P3 | Blocked (needs ModelGraph template) |
 
+### Bring Your Own Model
+
+Xybrid works with **any** ONNX, GGUF, or SafeTensors model. You just need a `model_metadata.json` that tells xybrid how to run it.
+
+**With Claude Code** (recommended):
+
+```sh
+# One-liner — generates model_metadata.json from a HuggingFace model card
+claude /xybrid-init hexgrad/Kokoro-82M-v1.0-ONNX
+```
+
+If you don't have the xybrid repo cloned, install the skills first:
+
+```sh
+curl -sSL https://raw.githubusercontent.com/xybrid-ai/xybrid/main/tools/scripts/install-skills.sh | sh
+claude /xybrid-init your-org/your-model
+```
+
+**Manually** — create `model_metadata.json` in your model directory:
+
+```json
+{
+  "model_id": "my-model",
+  "version": "1.0",
+  "execution_template": { "type": "Onnx", "model_file": "model.onnx" },
+  "preprocessing": [],
+  "postprocessing": [],
+  "files": ["model.onnx"],
+  "metadata": { "task": "text-generation" }
+}
+```
+
+See the [model metadata docs](docs/sdk/API_REFERENCE.md) for the full schema, or look at existing examples in [`integration-tests/fixtures/models/`](integration-tests/fixtures/models/).
+
 ---
 
 ## Features
