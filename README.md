@@ -288,7 +288,7 @@ claude /xybrid-init hexgrad/Kokoro-82M-v1.0-ONNX
 If you don't have the xybrid repo cloned, install the skills first:
 
 ```sh
-curl -sSL https://raw.githubusercontent.com/xybrid-ai/xybrid/main/tools/scripts/install-skills.sh | sh
+curl -sSL https://raw.githubusercontent.com/xybrid-ai/xybrid/master/tools/scripts/install-skills.sh | sh
 claude /xybrid-init your-org/your-model
 ```
 

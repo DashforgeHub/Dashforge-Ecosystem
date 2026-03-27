@@ -2,7 +2,7 @@
 # Install xybrid Claude Code skills into your project.
 #
 # Usage:
-#   curl -sSL https://raw.githubusercontent.com/xybrid-ai/xybrid/main/tools/scripts/install-skills.sh | sh
+#   curl -sSL https://raw.githubusercontent.com/xybrid-ai/xybrid/master/tools/scripts/install-skills.sh | sh
 #
 # Or run directly:
 #   ./install-skills.sh
@@ -12,7 +12,7 @@
 set -euo pipefail
 
 REPO="xybrid-ai/xybrid"
-BRANCH="main"
+BRANCH="master"
 BASE_URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}"
 TARGET_DIR=".claude/commands"
 
