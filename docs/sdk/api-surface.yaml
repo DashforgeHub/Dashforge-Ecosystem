@@ -64,6 +64,12 @@ classes:
         params: [{ name: path, type: String }]
         return: XybridModelLoader
         status: { dart: implemented, kotlin: implemented, swift: implemented, csharp: implemented }
+      fromModelFile:
+        static: true
+        params: [{ name: filePath, type: String }]
+        return: XybridModelLoader
+        notes: "Loads a raw GGUF file directly. Auto-generates model_metadata.json from GGUF binary header if not present."
+        status: { dart: planned, kotlin: planned, swift: planned, csharp: implemented }
       fromHuggingFace:
         static: true
         params: [{ name: repo, type: String }]
