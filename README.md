@@ -254,6 +254,7 @@ All models run entirely on-device. No cloud, no API keys required. Browse the fu
 | Model | Params | Format | Description |
 |-------|--------|--------|-------------|
 | Gemma 3 1B | 1B | GGUF Q4_K_M | Google's mobile-optimized LLM |
+| LFM2.5 350M | 354M | GGUF Q4_K_M | Liquid AI's hybrid conv+attention, 9 languages, tool calling |
 | Llama 3.2 1B | 1B | GGUF Q4_K_M | Meta's general purpose, 128K context |
 | Qwen 2.5 0.5B | 500M | GGUF Q4_K_M | Compact on-device chat |
 | Qwen 3.5 0.8B | 800M | GGUF Q4_K_M | Latest Qwen with reasoning (thinking mode) |
@@ -267,7 +268,7 @@ All models run entirely on-device. No cloud, no API keys required. Browse the fu
 | Phi-4 Mini | LLM | 3.8B | P2 | Spec Ready (first multi-quant: Q4, Q8, FP16) |
 | Qwen3 0.6B | LLM | 600M | P2 | Planned |
 | Trinity Nano | LLM (MoE) | 6B (1B active) | P2 | Planned |
-| LFM2 700M | LLM | 700M | P2 | Planned |
+| LFM2-VL 700M | Vision+LLM | 700M | P2 | Planned |
 | Nomic Embed Text v1.5 | Embeddings | 137M | P1 | Blocked (needs Tokenize/MeanPool steps) |
 | LFM2-VL 450M | Vision | 450M | P2 | Planned |
 | Whisper Tiny CoreML | ASR | 39M | P2 | Planned |
