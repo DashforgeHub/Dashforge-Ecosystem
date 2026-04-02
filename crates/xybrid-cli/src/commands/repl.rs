@@ -493,11 +493,21 @@ fn execute_streaming(
 
     let accumulated_text = Arc::new(Mutex::new(String::new()));
     let text_clone = Arc::clone(&accumulated_text);
+    let token_count = Arc::new(std::sync::atomic::AtomicUsize::new(0));
+    let token_count_clone = Arc::clone(&token_count);
+    let first_token_time = Arc::new(Mutex::new(None::<std::time::Instant>));
+    let first_token_clone = Arc::clone(&first_token_time);
 
     let streaming_result = if let Some(ref ctx) = conversation_context {
         model.run_streaming_with_context(input, ctx, None, |token| {
             print!("{}", token.token);
             io::stdout().flush()?;
+            let count = token_count_clone.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+            if count == 0 {
+                if let Ok(mut ft) = first_token_clone.lock() {
+                    *ft = Some(std::time::Instant::now());
+                }
+            }
             if let Ok(mut text) = text_clone.lock() {
                 text.push_str(&token.token);
             }
@@ -507,6 +517,12 @@ fn execute_streaming(
         model.run_streaming(input, None, |token| {
             print!("{}", token.token);
             io::stdout().flush()?;
+            let count = token_count_clone.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+            if count == 0 {
+                if let Ok(mut ft) = first_token_clone.lock() {
+                    *ft = Some(std::time::Instant::now());
+                }
+            }
             if let Ok(mut text) = text_clone.lock() {
                 text.push_str(&token.token);
             }
@@ -515,7 +531,7 @@ fn execute_streaming(
     };
 
     match streaming_result {
-        Ok(result) => {
+        Ok(_result) => {
             let elapsed = start.elapsed();
             println!();
 
@@ -533,11 +549,34 @@ fn execute_streaming(
                 }
             }
 
-            println!(
-                "\n⏱️  Inference time: {:.2}s ({}ms latency)",
-                elapsed.as_secs_f32(),
-                result.latency_ms()
-            );
+            let tokens = token_count.load(std::sync::atomic::Ordering::Relaxed);
+            let ttft = first_token_time
+                .lock()
+                .ok()
+                .and_then(|ft| ft.map(|t| t.duration_since(start)));
+
+            // Compute decode speed from first-token onward (excludes prefill)
+            let decode_tok_s = ttft.and_then(|ttft_dur| {
+                let decode_time = elapsed.saturating_sub(ttft_dur).as_secs_f64();
+                // Need at least 2 tokens and measurable decode time for meaningful tok/s
+                if tokens >= 2 && decode_time > 0.001 {
+                    Some((tokens - 1) as f64 / decode_time)
+                } else {
+                    None
+                }
+            });
+
+            if let Some(tok_s) = decode_tok_s {
+                let ttft_ms = ttft.map(|d| d.as_millis()).unwrap_or(0);
+                println!(
+                    "\n⏱️  {} tokens in {:.2}s ({:.1} tok/s, {ttft_ms}ms to first token)",
+                    tokens,
+                    elapsed.as_secs_f64(),
+                    tok_s
+                );
+            } else {
+                println!("\n⏱️  {} tokens in {:.2}s", tokens, elapsed.as_secs_f64());
+            }
             true
         }
         Err(e) => {

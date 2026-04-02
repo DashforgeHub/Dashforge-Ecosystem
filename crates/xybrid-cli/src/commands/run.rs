@@ -387,7 +387,7 @@ fn print_pipeline_results(
         println!("\nStage {}: {}", i + 1, display_stage_name(&result.stage));
         println!("  Routing: {}", result.routing_decision.target);
         println!("  Reason: {}", result.routing_decision.reason);
-        println!("  Latency: {}ms", result.latency_ms);
+        println!("  Time: {}ms", result.latency_ms);
         println!("  Output Type: {}", result.output.kind_str());
 
         match &result.output.kind {
@@ -995,7 +995,7 @@ fn print_inference_results(
     println!("{}", "=".repeat(60));
     println!();
     println!("  Model: {} v{}", metadata.model_id, metadata.version);
-    println!("  Latency: {:.2}ms", elapsed.as_millis());
+    println!("  Time: {:.2}s", elapsed.as_secs_f32());
     println!("  Output Type: {}", output.kind_str());
 
     match &output.kind {
