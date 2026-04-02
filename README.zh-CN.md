@@ -76,7 +76,7 @@
 
 | 目标 | 路径 |
 |------|------|
-| 最快上手（2 分钟） | [下载 CLI →](https://github.com/xybrid-ai/xybrid/releases) |
+| 最快上手（2 分钟） | [安装 CLI →](#安装) |
 | 构建移动端或桌面应用 | [Flutter SDK →](bindings/flutter/) |
 | 为游戏添加 AI NPC | [Unity SDK →](bindings/unity/)，体验 [3D 酒馆示例](https://github.com/xybrid-ai/xybrid-unity-tavern) |
 | Android 原生开发 | [Kotlin SDK →](bindings/kotlin/) |
@@ -94,12 +94,34 @@ Xybrid 是一个 **Rust 驱动的运行时**，为所有主流平台提供原生
 | **[Unity](bindings/unity/)** | macOS, Windows, Linux, iOS, Android | [见下方](#安装) | 可用 | [Unity 3D AI 酒馆](https://github.com/xybrid-ai/xybrid-unity-tavern) |
 | **[Swift](bindings/apple/)** | iOS, macOS | Swift Package Manager | 即将推出 | [README](examples/ios/README.md) |
 | **[Kotlin](bindings/kotlin/)** | Android | Maven Central | 可用 | [README](examples/android/README.md) |
-| **[CLI](https://github.com/xybrid-ai/xybrid/releases)** | macOS, Linux, Windows | [下载二进制文件](https://github.com/xybrid-ai/xybrid/releases) | 可用 | — |
+| **[CLI](https://github.com/xybrid-ai/xybrid/releases)** | macOS, Linux, Windows | `curl -sSL .../install.sh \| sh` | 可用 | — |
 | **[Rust](crates/)** | 全平台 | `xybrid-core` / `xybrid-sdk` | 可用 | — |
 
 所有 SDK 封装同一个 Rust 核心——跨平台行为和模型支持完全一致。
 
 ### 安装
+
+**CLI** — 一键安装（无需 Rust）：
+
+```bash
+# macOS / Linux
+curl -sSL https://raw.githubusercontent.com/xybrid-ai/xybrid/master/install.sh | sh
+```
+
+```powershell
+# Windows (PowerShell)
+irm https://raw.githubusercontent.com/xybrid-ai/xybrid/master/install.ps1 | iex
+```
+
+或使用 Rust：
+
+```bash
+cargo install --git https://github.com/xybrid-ai/xybrid xybrid-cli
+```
+
+也可以直接从 [Releases](https://github.com/xybrid-ai/xybrid/releases) 下载二进制文件。
+
+完整的安装指南请参阅 [Installation Guide](docs/INSTALLATION.md)（英文）。
 
 **Unity** — Package Manager → 通过 git URL 添加：
 
@@ -108,7 +130,7 @@ https://github.com/xybrid-ai/xybrid.git#upm
 ```
 
 > `upm` 分支包含所有平台的预编译原生库。
-> 固定版本：`https://github.com/xybrid-ai/xybrid.git#upm/v0.1.0-beta5`
+> 固定版本：`https://github.com/xybrid-ai/xybrid.git#upm/v0.1.0-beta8`
 
 **Flutter** — 添加到你的 `pubspec.yaml`：
 
@@ -121,7 +143,7 @@ dependencies:
 
 ```gradle
 dependencies {
-    implementation("ai.xybrid:xybrid-kotlin:0.1.0-beta5")
+    implementation("ai.xybrid:xybrid-kotlin:0.1.0-beta9")
 }
 ```
 
@@ -254,6 +276,7 @@ let result = pipeline.run(&Envelope::audio(audio_bytes))?;
 | 模型 | 参数量 | 格式 | 简介 |
 |------|--------|------|------|
 | Gemma 3 1B | 1B | GGUF Q4_K_M | Google 为移动端优化的模型 |
+| LFM2.5 350M | 354M | GGUF Q4_K_M | Liquid AI 混合卷积+注意力架构，9 种语言，工具调用 |
 | Llama 3.2 1B | 1B | GGUF Q4_K_M | Meta 的通用模型，128K 上下文 |
 | Qwen 2.5 0.5B | 500M | GGUF Q4_K_M | 紧凑的本地聊天模型 |
 | Qwen 3.5 0.8B | 800M | GGUF Q4_K_M | 最新 Qwen，支持推理（思考模式） |

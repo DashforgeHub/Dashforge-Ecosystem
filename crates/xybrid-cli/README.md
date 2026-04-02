@@ -1,78 +1,47 @@
 # Xybrid CLI
 
-Command-line interface for running hybrid cloud-edge AI inference pipelines.
+Command-line interface for running on-device ML inference — LLMs, TTS, ASR, and pipelines.
 
 ## Installation
 
-Build from source:
+See the full [Installation Guide](../../docs/INSTALLATION.md) for all options.
+
+**Quick install (no Rust required):**
 
 ```bash
-cargo build --release
+# macOS / Linux
+curl -sSL https://raw.githubusercontent.com/xybrid-ai/xybrid/master/install.sh | sh
+
+# Windows (PowerShell)
+irm https://raw.githubusercontent.com/xybrid-ai/xybrid/master/install.ps1 | iex
 ```
 
-The binary will be available at `target/release/xybrid`.
-
-## Usage
-
-### Run Command
-
-Execute a pipeline from a YAML configuration file:
+**From source:**
 
 ```bash
-xybrid run --config <path-to-config.yaml>
+cargo install --git https://github.com/xybrid-ai/xybrid xybrid-cli --features platform-macos
 ```
 
-Or use the short form:
+## Quick Start
 
 ```bash
-xybrid run -c <path-to-config.yaml>
+# List available models
+xybrid models list
+
+# Text-to-speech
+xybrid run --model kokoro-82m --input-text "Hello world" --output hello.wav
+
+# Speech-to-text
+xybrid run --model whisper-tiny --input-audio recording.wav
+
+# Chat with an LLM (interactive)
+xybrid repl --model smollm2-360m --stream
+
+# Run any GGUF from HuggingFace
+xybrid run --huggingface "unsloth/SmolLM2-360M-Instruct-GGUF:Q4_K_M" --input-text "Hello!"
 ```
 
-## Configuration File Format
+## Documentation
 
-The pipeline configuration is a YAML file with the following structure:
-
-```yaml
-# Optional pipeline name
-name: "My Pipeline"
-
-# List of stage names (executed in order)
-stages:
-  - "stage-name-1"
-  - "stage-name-2"
-  - "stage-name-3"
-
-# Input envelope configuration
-input:
-  kind: "AudioRaw"  # or "Text", etc.
-
-# Device metrics
-metrics:
-  network_rtt: 110      # Network round-trip time in milliseconds
-  battery: 75           # Battery level (0-100)
-  temperature: 24.0     # Device temperature in Celsius
-
-# Model availability mapping (stage name -> available locally)
-availability:
-  "stage-name-1": true   # Available locally
-  "stage-name-2": false  # Only available in cloud
-  "stage-name-3": true   # Available locally
-```
-
-## Example
-
-See `examples/hiiipe.yaml` for a complete example configuration:
-
-```bash
-xybrid run -c examples/hiiipe.yaml
-```
-
-This will execute the Hiiipe pipeline: Mic Input → ASR → Motivator → TTS.
-
-## Output
-
-The CLI provides:
-- Configuration summary (stages, input, metrics, availability)
-- Pipeline execution progress via telemetry logs
-- Final results showing routing decisions, latency, and outputs for each stage
-
+- [Installation & CLI Reference](../../docs/INSTALLATION.md) — install methods, all commands, flags, and options
+- [Main README](../../README.md) — project overview and SDK quickstarts

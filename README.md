@@ -75,7 +75,7 @@
 
 | Goal | Path |
 |------|------|
-| Fastest demo (2 min) | [Download CLI →](https://github.com/xybrid-ai/xybrid/releases) |
+| Fastest demo (2 min) | [Install CLI →](#install) |
 | Build a mobile or desktop app | [Flutter SDK →](bindings/flutter/) |
 | Add AI NPCs to your game | [Unity SDK →](bindings/unity/) and try the [3D tavern demo](https://github.com/xybrid-ai/xybrid-unity-tavern) |
 | Android native | [Kotlin SDK →](bindings/kotlin/) |
@@ -96,12 +96,34 @@ Xybrid is a **Rust-powered runtime** with native bindings for every major platfo
 | **[Unity](bindings/unity/)** | macOS, Windows, Linux, iOS, Android | [See below](#install) | Available | [Unity 3D AI tavern](https://github.com/xybrid-ai/xybrid-unity-tavern) |
 | **[Swift](bindings/apple/)** | iOS, macOS | Swift Package Manager | Coming Soon | [README](examples/ios/README.md) |
 | **[Kotlin](bindings/kotlin/)** | Android | Maven Central | Available | [README](examples/android/README.md) |
-| **[CLI](https://github.com/xybrid-ai/xybrid/releases)** | macOS, Linux, Windows | [Download binary](https://github.com/xybrid-ai/xybrid/releases) | Available | — |
+| **[CLI](https://github.com/xybrid-ai/xybrid/releases)** | macOS, Linux, Windows | `curl -sSL .../install.sh \| sh` | Available | — |
 | **[Rust](crates/)** | All | `xybrid-core` / `xybrid-sdk` | Available | — |
 
 Every SDK wraps the same Rust core — identical model support and behavior across all platforms.
 
 ### Install
+
+**CLI** — one-liner (no Rust required):
+
+```bash
+# macOS / Linux
+curl -sSL https://raw.githubusercontent.com/xybrid-ai/xybrid/master/install.sh | sh
+```
+
+```powershell
+# Windows (PowerShell)
+irm https://raw.githubusercontent.com/xybrid-ai/xybrid/master/install.ps1 | iex
+```
+
+Or with Rust:
+
+```bash
+cargo install --git https://github.com/xybrid-ai/xybrid xybrid-cli
+```
+
+Or download a binary directly from [Releases](https://github.com/xybrid-ai/xybrid/releases).
+
+See the full [Installation Guide](docs/INSTALLATION.md) for platform features, hardware acceleration, and CLI reference.
 
 **Unity** — Package Manager → Add from git URL:
 
