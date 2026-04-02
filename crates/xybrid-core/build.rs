@@ -297,6 +297,17 @@ fn compile_llama_cpp() {
                 _ => "arm64-v8a",
             };
             cmake_config.define("ANDROID_ABI", android_abi);
+
+            // Enable ARMv8.2-A dotprod for arm64 Android targets.
+            // The new llama.cpp (b541241+) relies on dotprod-optimized GEMM
+            // microkernels in repack.cpp. Without this, quantized models
+            // (Q4_K_M, Q5_K, etc.) fall back to generic NEON paths that are
+            // 3-5x slower. dotprod is available on all Cortex-A76+ cores
+            // (2019+): Snapdragon 855+, Tensor G1+, Dimensity 1000+.
+            if android_abi == "arm64-v8a" {
+                cmake_config.define("GGML_CPU_ARM_ARCH", "armv8.2-a+dotprod");
+            }
+
             cmake_config.define("ANDROID_PLATFORM", "android-28");
             cmake_config.define("ANDROID_STL", "c++_shared");
             cmake_config.define("ANDROID_NDK", ndk);
