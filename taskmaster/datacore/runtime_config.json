@@ -1,0 +1,27 @@
+{
+  "projectName": "SignalCore",
+  "environment": "development",
+
+  "logging": {
+    "level": "debug",
+    "destinations": ["console", "file"],
+    "filePath": "./logs/signalcore.log",
+    "rotation": {
+      "enabled": true,
+      "maxSizeMb": 10,
+      "maxFiles": 5
+    }
+  },
+
+  "features": {
+    "enableDiagnostics": true,
+    "enableRealTimeAlerts": false,
+    "enableMetrics": true,
+    "enableWebhooks": false
+  },
+
+  "security": {
+    "apiKeyRequired": true,
+    "allowedOrigins": ["http://localhost:3000"]
+  }
+}
