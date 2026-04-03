@@ -1,392 +1,242 @@
+<p align="center">
+<img width="400" height="400" alt="hf_20260309_045718_0a075c8b-05d0-4610-8f94-1dfe0136d849" src="https://github.com/DashforgeHub/Dashforge/blob/main/dashforge_new_design-removebg-preview.png" />
+
+</p>
+<h1 align="center">Dashforge Terminal</h1>
 <div align="center">
-<p align="center">
-  <a href="./README.md">English</a> · <a href="./README.zh-CN.md">简体中文</a>
-</p>
-
-
-<p align="center">
-  <img src="./docs/logo.jpg" alt="Xybrid Logo" width="180"/>
-</p>
-
-<h1 align="center">Xybrid</h1>
-
-<p align="center">
-  <strong>Run LLMs, ASR, and TTS natively in apps and games.</strong><br/>
-  Rust core · iOS · Android · Flutter · Unity<br/>
-  Private, offline, no cloud required.
-</p>
-
-<p align="center">
-  <a href="https://docs.xybrid.dev">Documentation</a> ·
-  <a href="#sdks">SDKs</a> ·
-  <a href="https://www.xybrid.ai/models">Models</a> ·
-  <a href="https://discord.gg/YhFHHkhbad">Join Discord</a> ·
-  <a href="https://x.com/xybrid_ai">Follow on X</a> ·
-  <a href="https://github.com/xybrid-ai/xybrid/issues">Issues</a>
-</p>
-
-<p align="center">
-
-[![Website][website-shield]][website-url]
-[![Discord][discord-shield]][discord-url]
-[![Twitter][twitter-shield]][twitter-url]
-<br>
-[![License][license-shield]][license-url]
-[![Build][build-shield]][build-url]
-[![Stars][stars-shield]][stars-url]
-[![Release][release-shield]][release-url]
-[![Release Date][release-date-shield]][release-url]
-<br>
-[![pub.dev][pubdev-shield]][pubdev-url]
-[![Maven Central][maven-shield]][maven-url]
-[![Visitors](https://visitor-badge.laobi.icu/badge?page_id=xybrid-ai.xybrid)](https://github.com/xybrid-ai/xybrid)
-
-</p>
-
-[website-shield]: https://img.shields.io/badge/xybrid.ai-4285F4?style=flat
-[website-url]: https://www.xybrid.ai/
-[discord-shield]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdiscord.com%2Fapi%2Finvites%2FYhFHHkhbad%3Fwith_counts%3Dtrue&query=%24.approximate_member_count&logo=discord&logoColor=white&label=Discord&color=5865F2&suffix=%20members
-[discord-url]: https://discord.gg/YhFHHkhbad
-[twitter-shield]: https://img.shields.io/twitter/follow/xybrid_ai
-[twitter-url]: https://x.com/xybrid_ai
-[license-shield]: https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=flat
-[license-url]: https://opensource.org/licenses/Apache-2.0
-[build-shield]: https://img.shields.io/github/actions/workflow/status/xybrid-ai/xybrid/ci.yml?branch=master&style=flat
-[build-url]: https://github.com/xybrid-ai/xybrid/actions
-[stars-shield]: https://img.shields.io/github/stars/xybrid-ai/xybrid?style=flat
-[stars-url]: https://github.com/xybrid-ai/xybrid/stargazers
-[release-shield]: https://img.shields.io/github/v/release/xybrid-ai/xybrid?style=flat&sort=semver
-[release-url]: https://github.com/xybrid-ai/xybrid/releases
-[release-date-shield]: https://img.shields.io/github/release-date/xybrid-ai/xybrid?style=flat
-[pubdev-shield]: https://img.shields.io/pub/v/xybrid_flutter?style=flat&label=pub.dev
-[pubdev-url]: https://pub.dev/packages/xybrid_flutter
-[maven-shield]: https://img.shields.io/maven-central/v/ai.xybrid/xybrid-kotlin?style=flat&label=Maven%20Central
-[maven-url]: https://central.sonatype.com/artifact/ai.xybrid/xybrid-kotlin
 </div>
-
 <p align="center">
-  <img src="docs/demo-desktop.gif" alt="Desktop demo" width="540">&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="docs/demo-android.gif" alt="Android demo" width="150">
+  <strong>AI-assisted trading terminal built for execution quality, risk control, and automation</strong>
 </p>
 
-
-
-## Start Here
-
-| Goal | Path |
-|------|------|
-| Fastest demo (2 min) | [Install CLI →](#install) |
-| Build a mobile or desktop app | [Flutter SDK →](bindings/flutter/) |
-| Add AI NPCs to your game | [Unity SDK →](bindings/unity/) and try the [3D tavern demo](https://github.com/xybrid-ai/xybrid-unity-tavern) |
-| Android native | [Kotlin SDK →](bindings/kotlin/) |
-| Rust / embedded | [Core crate →](crates/) |
----
-
 <p align="center">
-  <img src="docs/game-demo.gif" alt="Game demo" width="540">
+  A focused trading environment where chart context, routing, risk overlays, and account-level controls stay in one place
 </p>
 
-## SDKs
-
-Xybrid is a **Rust-powered runtime** with native bindings for every major platform.
-
-| SDK | Platforms | Install | Status | Sample |
-|-----|-----------|---------|--------|--------|
-| **[Flutter](bindings/flutter/)** | iOS, Android, macOS, Linux, Windows | [pub.dev](https://pub.dev/packages/xybrid_flutter) | Available | [README](examples/flutter/README.md) |
-| **[Unity](bindings/unity/)** | macOS, Windows, Linux, iOS, Android | [See below](#install) | Available | [Unity 3D AI tavern](https://github.com/xybrid-ai/xybrid-unity-tavern) |
-| **[Swift](bindings/apple/)** | iOS, macOS | Swift Package Manager | Coming Soon | [README](examples/ios/README.md) |
-| **[Kotlin](bindings/kotlin/)** | Android | Maven Central | Available | [README](examples/android/README.md) |
-| **[CLI](https://github.com/xybrid-ai/xybrid/releases)** | macOS, Linux, Windows | `curl -sSL .../install.sh \| sh` | Available | — |
-| **[Rust](crates/)** | All | `xybrid-core` / `xybrid-sdk` | Available | — |
-
-Every SDK wraps the same Rust core — identical model support and behavior across all platforms.
-
-### Install
-
-**CLI** — one-liner (no Rust required):
-
-```bash
-# macOS / Linux
-curl -sSL https://raw.githubusercontent.com/xybrid-ai/xybrid/master/install.sh | sh
-```
-
-```powershell
-# Windows (PowerShell)
-irm https://raw.githubusercontent.com/xybrid-ai/xybrid/master/install.ps1 | iex
-```
-
-Or with Rust:
-
-```bash
-cargo install --git https://github.com/xybrid-ai/xybrid xybrid-cli
-```
-
-Or download a binary directly from [Releases](https://github.com/xybrid-ai/xybrid/releases).
-
-See the full [Installation Guide](docs/INSTALLATION.md) for platform features, hardware acceleration, and CLI reference.
-
-**Unity** — Package Manager → Add from git URL:
-
-```bash
-https://github.com/xybrid-ai/xybrid.git#upm
-```
-
-> The `upm` branch contains pre-built native libraries for all platforms.
-> To pin a specific version: `https://github.com/xybrid-ai/xybrid.git#upm/v0.1.0-beta8`
-
-**Flutter** — add to your `pubspec.yaml`:
-
-```yaml
-dependencies:
-  xybrid_flutter: ^0.1.0
-```
-
-**Kotlin (Android)** — add to your `build.gradle.kts`:
-
-```gradle
-dependencies {
-    implementation("ai.xybrid:xybrid-kotlin:0.1.0-beta9")
-}
-```
+<p align="center">
+  <a href="https://твоя-web-app-ссылка"><img src="https://img.shields.io/badge/Web%20App-Open-3b82f6?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Web App"></a>
+  <a href="https://t.me/твой_мини_апп"><img src="https://img.shields.io/badge/Telegram%20Mini%20App-Launch-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram Mini App"></a>
+  <a href="https://твои-docs-ссылка"><img src="https://img.shields.io/badge/Docs-Read-8b5cf6?style=for-the-badge&logo=readthedocs&logoColor=white" alt="Docs"></a>
+  <a href="https://x.com/твой_аккаунт"><img src="https://img.shields.io/badge/X.com-Follow-000000?style=for-the-badge&logo=x&logoColor=white" alt="X"></a>
+  <a href="https://t.me/твоя_группа_или_канал"><img src="https://img.shields.io/badge/Telegram%20Community-Join-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram Community"></a>
+</p>
 
 ---
+
+> [!IMPORTANT]
+> Dashforge is built for traders who want execution, routing clarity, and risk context in one interface instead of splitting the workflow across several tools
+
+## Why This Exists
+
+Most trading terminals are fast at sending orders but weak at explaining what those orders will do to your account
+
+Dashforge solves that by showing routing, slippage, liquidity pressure, volatility, and exposure impact before you confirm the trade
+
+> [!TIP]
+> The platform is designed to answer three questions before every click: what you are trading into, how it changes your risk, and whether the route is efficient
+
+## What You Get in 30s
+
+- A clean terminal for manual trading
+- Real-time risk overlays next to the order ticket
+- Transparent route previews with fee and slippage context
+- One account for terminal usage, alerts, API access, and future automation
+- A token layer through **$Dashforge** for lower costs and higher limits
 
 ## Quick Start
 
-See each SDK's README for platform-specific setup: [Flutter](bindings/flutter/) · [Unity](bindings/unity/) · [Swift](bindings/apple/) · [Kotlin](bindings/kotlin/) · [Rust](crates/)
+### 1) Open the product
 
-### Single Model
+Use the web app as the main trading terminal and connect your account environment
 
-Run a model in one line from the CLI, or three lines from any SDK:
+### 2) Configure the basics
 
-**CLI:**
-```sh
-xybrid run kokoro-82m --input "Hello world" -o output.wav
-```
+Set your preferred markets, default order type, and risk preferences
 
-**Flutter:**
-```dart
-final model = await Xybrid.model('kokoro-82m').load();
-final result = await model.run(XybridEnvelope.text('Hello world'));
-// result → 24kHz WAV audio
-```
+### 3) Pick a market and prepare an order
 
-**Kotlin:**
-```kotlin
-val model = XybridModelLoader.fromRegistry("kokoro-82m").load()
-val result = model.run(Envelope.text("Hello world"))
-// result → 24kHz WAV audio
-```
+Choose size, order type, optional TP/SL, and review the route preview
 
-**Swift:**
-```swift
-let model = try ModelLoader.fromRegistry(modelId: "kokoro-82m").load()
-let result = try model.run(envelope: Envelope.text("Hello world"))
-// result → 24kHz WAV audio
-```
+### 4) Check the overlays
 
-**Unity (C#):**
-```csharp
-var model = XybridClient.LoadModel("kokoro-82m");
-var result = model.Run(Envelope.Text("Hello world"));
-// result → 24kHz WAV audio
-```
+Before confirming, review:
 
-**Rust:**
-```rust
-let model = Xybrid::model("kokoro-82m").load()?;
-let result = model.run(&Envelope::text("Hello world"))?;
-// result → 24kHz WAV audio
-```
+- expected slippage
+- liquidity depth around current price
+- volatility state
+- exposure impact on your account
 
-### Pipelines
+### 5) Send and manage
 
-Chain models together — build a voice assistant in 3 lines of YAML:
+Submit the order, then monitor positions, fills, PnL, and linked orders from the same interface
 
-```yaml
-# voice-assistant.yaml
-name: voice-assistant
-stages:
-  - model: whisper-tiny    # Speech → text
-  - model: qwen2.5-0.5b    # Process with LLM
-  - model: kokoro-82m      # Text → speech
-```
+> [!NOTE]
+> Dashforge uses one unified account model, so manual trading, alerts, and API-based workflows share the same limits, settings, and risk logic
 
-**CLI:**
-```sh
-xybrid run voice-assistant.yaml --input question.wav -o response.wav
-```
+## What It Actually Does
 
-**Flutter:**
-```dart
-final pipeline = Xybrid.pipeline(yaml: yamlString);
-final result = await pipeline.run(XybridEnvelope.audio(bytes: audioBytes, sampleRate: 16000));
-```
+Dashforge is an AI-assisted trading terminal, not an autopilot
 
-**Kotlin:**
-```kotlin
-// Pipeline support coming soon — use single model loading for now
-```
+AI is used to surface anomalies, summarize conditions, and highlight risk signals, while execution stays under the user’s control
 
-**Swift:**
-```swift
-// Pipeline support coming soon — use single model loading for now
-```
+The platform combines:
 
-**Unity (C#):**
-```csharp
-// Pipeline support coming soon — use single model loading for now
-```
+| Layer | What it does |
+|---|---|
+| Trading terminal | Handles charting context, order entry, positions, and fills |
+| Routing engine | Chooses the best available execution path across connected venues or pools |
+| Risk layer | Shows liquidity, volatility, leverage, and exposure impact before the order is sent |
+| Analytics layer | Adds basic market, token, PnL, and behavior-level insights |
+| Automation layer | Connects alerts, webhooks, APIs, and external bots under the same account logic |
 
-**Rust:**
-```rust
-let pipeline = Xybrid::pipeline(&yaml_string).load()?;
-pipeline.load_models()?;
-let result = pipeline.run(&Envelope::audio(audio_bytes))?;
-```
----
+> [!WARNING]
+> Dashforge is built to improve decision quality and execution discipline, but it does not remove market risk, slippage risk, or strategy risk
 
-## Supported Models
+## Real Use Cases
 
-All models run entirely on-device. No cloud, no API keys required. Browse the full registry with `xybrid models list`.
+### 1) Active trader in one screen
 
-### Start with these
+A trader watches a market, sees liquidity and volatility conditions, sends a limit order, and manages stops and targets without leaving the terminal
 
-| Model | Type | Params | Why start here |
-|-------|------|--------|----------------|
-| **SmolLM2 360M** | LLM | 360M | Best quality-to-size ratio for any device |
-| **Kokoro 82M** | TTS | 82M | High-quality speech, 24 voices, fast |
-| **Whisper Tiny** | ASR | 39M | Accurate multilingual transcription |
+### 2) Semi-systematic execution
 
-### Speech-to-Text
+A user trades manually but keeps watchlists, alerts, and exposure controls synced so signals and execution stay in one environment
 
-| Model | Params | Format | Description |
-|-------|--------|--------|-------------|
-| Whisper Tiny | 39M | SafeTensors | Multilingual transcription (Candle runtime) |
-| Wav2Vec2 Base | 95M | ONNX | English ASR with CTC decoding |
+### 3) Bot-assisted workflow
 
-### Text-to-Speech
+A webhook or external bot reacts to a condition, sends an order through the API, and still inherits the same account limits and trading rules
 
-| Model | Params | Format | Description |
-|-------|--------|--------|-------------|
-| Kokoro 82M | 82M | ONNX | High-quality, 24 natural voices |
-| KittenTTS Nano | 15M | ONNX | Ultra-lightweight, 8 voices |
+### 4) Power-user terminal stack
 
-### Language Models
+A trader who lives inside one main interface uses **$Dashforge** to reduce fees, unlock higher limits, and access deeper analytics over time
 
-| Model | Params | Format | Description |
-|-------|--------|--------|-------------|
-| Gemma 3 1B | 1B | GGUF Q4_K_M | Google's mobile-optimized LLM |
-| LFM2.5 350M | 354M | GGUF Q4_K_M | Liquid AI's hybrid conv+attention, 9 languages, tool calling |
-| Llama 3.2 1B | 1B | GGUF Q4_K_M | Meta's general purpose, 128K context |
-| Qwen 2.5 0.5B | 500M | GGUF Q4_K_M | Compact on-device chat |
-| Qwen 3.5 0.8B | 800M | GGUF Q4_K_M | Latest Qwen with reasoning (thinking mode) |
-| Qwen 3.5 2B | 2B | GGUF Q4_K_M | Larger Qwen 3.5 with extended reasoning |
-| SmolLM2 360M | 360M | GGUF Q4_K_M | Best tiny LLM, excellent quality/size ratio |
+## API / Examples
 
-### Coming Soon
+### Place an order
 
-| Model | Type | Params | Priority | Status |
-|-------|------|--------|----------|--------|
-| Phi-4 Mini | LLM | 3.8B | P2 | Spec Ready (first multi-quant: Q4, Q8, FP16) |
-| Qwen3 0.6B | LLM | 600M | P2 | Planned |
-| Trinity Nano | LLM (MoE) | 6B (1B active) | P2 | Planned |
-| LFM2-VL 700M | Vision+LLM | 700M | P2 | Planned |
-| Nomic Embed Text v1.5 | Embeddings | 137M | P1 | Blocked (needs Tokenize/MeanPool steps) |
-| LFM2-VL 450M | Vision | 450M | P2 | Planned |
-| Whisper Tiny CoreML | ASR | 39M | P2 | Planned |
-| Qwen3-TTS 0.6B | TTS | 600M | P2 | Blocked (needs custom SafeTensors runtime) |
-| Chatterbox Turbo | TTS | 350M | P3 | Blocked (needs ModelGraph template) |
+```http
+POST /v1/orders HTTP/1.1
+Host: api.dashforge.trade
+Authorization: Bearer YOUR_API_KEY
+Content-Type: application/json
 
-### Bring Your Own Model (Experimental)
-
-> **Note**: BYM support is experimental. The `model_metadata.json` schema is stable, but the AI-assisted tooling (`/xybrid-init`) is under active development and may not handle all model types yet.
-
-Xybrid works with **any** ONNX, GGUF, or SafeTensors model. You just need a `model_metadata.json` that tells xybrid how to run it.
-
-**With an AI assistant** (Claude Code, Codex, etc.):
-
-```sh
-# Install xybrid skills into your project
-curl -sSL https://raw.githubusercontent.com/xybrid-ai/xybrid/master/tools/scripts/install-skills.sh | sh
-
-# Generate model_metadata.json from a HuggingFace model
-claude /xybrid-init hexgrad/Kokoro-82M-v1.0-ONNX
-```
-
-Skills are agent-agnostic and live in [`agents/skills/`](agents/skills/). The installer symlinks them for Claude Code (`.claude/skills`) and Codex (`.codex/skills`).
-
-**Manually** — create `model_metadata.json` in your model directory:
-
-```json
 {
-  "model_id": "my-model",
-  "version": "1.0",
-  "execution_template": { "type": "Onnx", "model_file": "model.onnx" },
-  "preprocessing": [],
-  "postprocessing": [],
-  "files": ["model.onnx"],
-  "metadata": { "task": "text-generation" }
+  "symbol": "SOL/USDC",
+  "type": "limit",
+  "side": "buy",
+  "size": "25",
+  "price": "188.50",
+  "take_profit": "198.00",
+  "stop_loss": "181.00"
 }
 ```
 
-See the [model metadata docs](docs/sdk/API_REFERENCE.md) for the full schema, or look at existing examples in [`integration-tests/fixtures/models/`](integration-tests/fixtures/models/).
+### Get account positions
+
+```http
+GET /v1/account/positions HTTP/1.1
+Host: api.dashforge.trade
+Authorization: Bearer YOUR_API_KEY
+```
+
+### Example webhook payload
+
+```json
+{
+  "type": "order.filled",
+  "accountId": "acc_123",
+  "orderId": "ord_456",
+  "symbol": "SOL/USDC",
+  "side": "buy",
+  "size": "100",
+  "price": "192.35",
+  "timestamp": "2026-03-05T18:53:10Z"
+}
+```
+
+### Main endpoint groups
+
+| Endpoint group | Purpose |
+|---|---|
+| `/v1/markets` | Instruments, tickers, candles, order books, trades |
+| `/v1/orders` | Create, list, inspect, cancel, or bulk-cancel orders |
+| `/v1/account` | Balances, positions, PnL, activity, limits, and risk |
+| WebSocket streams | Real-time market and private account updates |
+| Webhooks | Event delivery for fills, alerts, risk triggers, and bot workflows |
+
+> [!IMPORTANT]
+> API keys should stay server-side, use minimal scopes, and never be embedded in public frontend code
+
+## Architecture
+
+Dashforge keeps the product simple from the user side, but structured underneath
+
+```text
+User Interface
+  ├─ Trading terminal
+  ├─ Watchlists and alerts
+  └─ Positions and PnL views
+
+Execution Core
+  ├─ Order ticket validation
+  ├─ Routing and slippage preview
+  └─ Order lifecycle tracking
+
+Risk and Analytics
+  ├─ Liquidity overlay
+  ├─ Volatility overlay
+  ├─ Exposure overlay
+  └─ Basic market and token analytics
+
+Developer Layer
+  ├─ REST API
+  ├─ WebSocket streams
+  └─ Webhooks for bots, n8n, and Zapier
+```
+
+## Limits
+
+- Supports **Solana only** at the current stage
+- AI assists with context and warnings but does not replace trader judgment
+- Basic token analytics are meant for fast structural checks, not deep forensic research
+- Some advanced features, higher limits, and lower fees may depend on **$Dashforge** tiers
+- Product details may evolve as routing, automation, and account systems expand
+
+> [!CAUTION]
+> Always verify order size, liquidity conditions, and account exposure before trading with real funds, especially in fast or thin markets
+
+## $Dashforge
+
+**$Dashforge** is the native utility token of the ecosystem
+
+It can be used for:
+
+- fee discounts and rebates
+- higher limits and deeper platform access
+- advanced dashboards and expanded quotas
+- long-term alignment between active users and platform economics
+
+| Tier | Example requirement | Benefits |
+|---|---|---|
+| Basic | 0 | Default access and standard limits |
+| Bronze | 1,000 | Slightly better limits and small fee discount |
+| Silver | 5,000 | More workspaces, watchlists, and API capacity |
+| Gold | 25,000 | Advanced risk and PnL views plus priority routing |
+| Platinum | 100,000 | Maximum limits, premium access, and early features |
+
+## Security
+
+Dashforge treats account, trading, and API security as core product layers
+
+- strong authentication and optional MFA
+- session and device controls
+- scoped API keys with least-privilege access
+- HTTPS-only transport for API and webhook traffic
+- signed webhook delivery and retry-safe design
+- account-level limits and circuit breakers to reduce avoidable risk
 
 ---
 
-## Features
-
-| Capability | iOS | Android | macOS | Linux | Windows |
-|------------|-----|---------|-------|-------|---------|
-| Speech-to-Text | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Text-to-Speech | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Language Models | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Vision Models | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 |
-| Embeddings | 🔜 | 🔜 | 🔜 | 🔜 | 🔜 |
-| Pipeline Orchestration | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Model Download & Caching | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Hardware Acceleration | Metal, ANE | CPU | Metal, ANE | CUDA | CUDA |
-
-**SDK pipeline support:** Flutter ✅ · Rust ✅ · Kotlin 🔜 · Swift 🔜 · Unity 🔜
-
----
-
-## Why Xybrid?
-
-- **Privacy first** — All inference runs on-device. Your data never leaves the device.
-- **Offline capable** — No internet required after initial model download.
-- **Cross-platform** — One API across iOS, Android, macOS, Linux, and Windows.
-- **Pipeline orchestration** — Chain models together (ASR → LLM → TTS) in a single call.
-- **Automatic optimization** — Hardware acceleration on Apple Neural Engine, Metal, and CUDA.
-
-### How it compares
-
-| | Xybrid | Ollama | llama.cpp | ONNX Runtime |
-|---|---|---|---|---|
-| Mobile (iOS/Android) | ✅ | ❌ | ❌ | ✅ |
-| Game engine (Unity) | ✅ | ❌ | ❌ | ❌ |
-| Multi-stage pipelines | ✅ | ❌ | ❌ | ❌ |
-| ASR + TTS + LLM in one SDK | ✅ | ❌ | ❌ | ❌ |
-| Runs in-process (no server) | ✅ | ❌ | ✅ | ✅ |
-| No cloud required | ✅ | ✅ | ✅ | ✅ |
-
----
-
-## Community
-
-- [Documentation](https://docs.xybrid.dev)
-- [Discord](https://discord.gg/YhFHHkhbad)
-- [X (Twitter)](https://x.com/xybrid_ai)
-- [GitHub Issues](https://github.com/xybrid-ai/xybrid/issues)
-
-## Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on setting up your development environment, submitting pull requests, and adding new models.
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=xybrid-ai/xybrid&type=date&legend=bottom-right)](https://www.star-history.com/#xybrid-ai/xybrid&type=date&legend=bottom-right)
-
-## License
-
-Apache License 2.0 — see [LICENSE](./LICENSE) for details.
+<p align="center">
+  Built for traders who care about execution quality, risk visibility, and automation discipline
+</p>
